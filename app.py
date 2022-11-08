@@ -23,7 +23,10 @@ with app.app_context():
 # GET / - show the user the landing page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    a_user = {'name':'Amal', 'email':'ajoshy@uncc.edu'}
+    return render_template('index.html',user=a_user)
+
+
 
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)

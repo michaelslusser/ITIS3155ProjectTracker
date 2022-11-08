@@ -1,10 +1,31 @@
 /* webpage styling */
 h1{
     color:black;
+    text-align: center;
 }
 h2{
     color: #112A46;
 }
 body{
     background:#ACC8E5;
+}
+
+nav{
+    text-align: center;
+}
+
+.box{
+    width: 100%;
+    height: 500px;
+    width: 25em;
+    text-align: center;
+}
+.insideBox{
+    background-color: white;
+    text-align: left;
+    border: 5px solid;
+    margin-bottom: 20px;
+}
+.tableRow{
+    border: 5px solid black;
 }
