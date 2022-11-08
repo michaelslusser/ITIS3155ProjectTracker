@@ -94,30 +94,71 @@ def create_comment(task_id, name, comment):
     db.session.commit()
 
 def create_user(username, email, password):
-    print('Not implemented yet')
+    user = User(username, email, password)
+    db.session.add(user)
+    db.session.commit()
 
 # update operations
-def edit_project(new_title, new_detail, new_company):
-    print('Not implemented yet')
+def update_project(p_id, title, detail, company):
+    # get project from db and update values
+    project = find_project_by_id(p_id)
+    project.title = title
+    project.detail = detail
+    project.company_name = company
+    # push changes
+    db.session.add(project)
+    db.session.commit()
 
-def edit_task(new_project_id, new_title, new_description):
-    print('Not implemented yet')
+def update_task(t_id, project_id, title, description):
+    # get task from db and update values
+    task = find_task_by_id(t_id)
+    task.project_id = project_id
+    task.title = title
+    task.description = description
+    # push changes
+    db.session.add(task)
+    db.session.commit()
 
-def edit_comment(new_name, new_comment):
-    print('Not implemented yet')
+def update_comment(c_id, name, comment):
+    # get comment from db and update values
+    comment_object = find_comment_by_id(c_id)
+    comment_object.name = name
+    comment_object.comment = comment
+    # push changes
+    db.session.add(comment_object)
+    db.session.commit()
 
-def edit_user(new_username, new_email, new_password):
-    print('Not implemented yet')
+def update_user(u_id, username, email, password):
+    # get user from db and update values
+    user = find_user_by_id(u_id)
+    user.username = username
+    user.email = email
+    user.password = password
+    # push changes
+    db.session.add(user)
+    db.session.commit()
 
 # delete operations
 def remove_project(p_id):
-    print('Not implemented yet')
+    # get project from db and delete
+    project = find_project_by_id(p_id)
+    db.session.delete(project)
+    db.session.commit()
 
-def remove_task(p_id, t_id):
-    print('Not implemented yet')
+def remove_task(t_id):
+    # get task from db and delete
+    task = find_task_by_id(t_id)
+    db.session.delete(task)
+    db.session.commit()
 
-def remove_comment(t_id, c_id):
-    print('Not implemented yet')
+def remove_comment(c_id):
+    # get comment from db and delete
+    comment = find_comment_by_id(c_id)
+    db.session.delete(comment)
+    db.session.commit()
 
 def remove_user(u_id):
-    print('Not implemented yet')
+    # get user from db and delete
+    user = find_user_by_id(u_id)
+    db.session.delete(user)
+    db.session.commit()
