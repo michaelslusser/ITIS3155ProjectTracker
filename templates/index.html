@@ -9,14 +9,28 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
     </head>
     <body>
+        <h1>Welcome!</h1>
         <nav>
             <!--Add other pages-->
+            <a href="">Home</a> ||
+            <a href="">Projects</a>
         </nav>
 
-        <h1>Welcome!</h1>
-
-        <h2>Temporary header.</h2>
-        
-
+        <h2>Here are your projects</h2>
+        <h2>Projects</h2>
+        <div class="box">
+            <table class="insideBox">
+                <!--Add start of for loop here-->
+                <tr>
+                    <!--Add in other <td> elements for whatever you need-->
+                    <td class="tableRow"><a href="">Add funciton to get project title</a></td>
+                </tr>
+                <!--Add end of for loop here-->
+                <tr>
+                    <!--Add in other <td> elements for whatever you need-->
+                    <td class="tableRow"><a href="">Add funciton to get project title</a></td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>
