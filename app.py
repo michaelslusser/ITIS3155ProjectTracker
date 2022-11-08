@@ -17,14 +17,20 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 db.init_app(app)
 with app.app_context():
     db.create_all()
+a_user = {'id':1,'username':'Amal', 'email':'ajoshy@uncc.edu', 'password':'password'}
+projects = {1:{'title': 'First project', 'detail':'This is the first project', 'company_name': 'verizon' }}
 
 # routing
 
 # GET / - show the user the landing page
 @app.route('/')
 def index():
-    a_user = {'name':'Amal', 'email':'ajoshy@uncc.edu'}
     return render_template('index.html',user=a_user)
+@app.route('/new_project')
+def new_project():
+    projects = {'title':'First project', 'detail':'This is the first project', 'company_name': 'verizon' }
+    return render_template('new_project.html', user=a_user)
+
 
 
 

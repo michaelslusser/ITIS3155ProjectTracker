@@ -9,11 +9,12 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
     </head>
     <body>
-        <h1>Welcome {{user.name}}!</h1>
+        <h1>Welcome {{user.username}}!</h1>
         <nav>
             <!--Add other pages-->
-            <a href="">Home</a> ||
-            <a href="">Projects</a>
+            <a href="{{ url_for('index') }}">Home</a> ||
+            <a href="">Projects</a> ||
+            <a href="{{ url_for('new_project') }}">Create Project</a>          
         </nav>
 
         <h2>Temporary header.</h2>
