@@ -16,3 +16,18 @@
             <a href="">Projects</a>            
         </nav>
         <h2>Create new project below</h2>
+        <form action="new_project" method="post">
+            <p><label>Title </label></p><p>  <input type="text" name="title"/></p>
+            <p><label>Note </label></p>
+            <p>
+                <textarea name="detail"  rows="6" cols="0" >
+                        Add a description of your project here
+                </textarea>
+            </p>
+            <p>
+                <textarea name="company_name"  rows="6" cols="0" >
+                        Add a company name here
+                </textarea>
+            </p>
+            <input type="submit" value="Add Project"/>
+        </form>

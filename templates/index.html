@@ -16,24 +16,20 @@
             <a href="">Projects</a> ||
             <a href="{{ url_for('new_project') }}">Create Project</a>          
         </nav>
-
-        <h2>Temporary header.</h2>
-        
-
         <h2>Here are your projects</h2>
         <h2>Projects</h2>
         <div class="box">
             <table class="insideBox">
                 <!--Add start of for loop here-->
+                {% for key, value in user_projects.items() %}
                 <tr>
                     <!--Add in other <td> elements for whatever you need-->
-                    <td class="tableRow"><a href="">Add funciton to get project title</a></td>
+                    <td class="tableRow"><a href="">{{value.title}}</a></td>
+                    <td class="tableRow">{{value.detail}}</a></td>
+                    <td class="tableRow">{{value.company_name}}</a></td>
                 </tr>
+                {% endfor %}
                 <!--Add end of for loop here-->
-                <tr>
-                    <!--Add in other <td> elements for whatever you need-->
-                    <td class="tableRow"><a href="">Add funciton to get project title</a></td>
-                </tr>
             </table>
         </div>
     </body>

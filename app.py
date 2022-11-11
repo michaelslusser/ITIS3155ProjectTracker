@@ -24,12 +24,21 @@ projects = {1:{'title': 'First project', 'detail':'This is the first project', '
 
 # GET / - show the user the landing page
 @app.route('/')
+@app.route('/index')
 def index():
-    return render_template('index.html',user=a_user)
-@app.route('/new_project')
+    return render_template('index.html',user=a_user,user_projects=projects)
+@app.route('/new_project', methods=['GET','POST'])
 def new_project():
-    projects = {'title':'First project', 'detail':'This is the first project', 'company_name': 'verizon' }
-    return render_template('new_project.html', user=a_user)
+    #projects = {'title':'First project', 'detail':'This is the first project', 'company_name': 'verizon' }
+    if request.method == 'POST':
+        title = request.form['title']
+        text = request.form['detail']
+        company = request.form['company_name']
+        id = len(projects)+1
+        projects[id] = {'title': title, 'detail': text, 'company_name': company}
+        return redirect(url_for('index'))
+    else:
+        return render_template('new_project.html', user=a_user)
 
 
 
