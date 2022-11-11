@@ -1,0 +1,21 @@
+<!-- landing page for app -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>View Project</title>
+        <!--styles-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+    </head>
+    <body>
+        <h1>Welcome {{user.username}}!</h1>
+        <nav>
+            <!--Add other pages-->
+            <a href="{{ url_for('index') }}">Home</a> ||
+            <a href="{{ url_for('new_project') }}">Create Project</a>            
+        </nav>
+        <h2>{{my_project.title}}</h2>
+        <h3>{{my_project.detail}}</h3>
+    </body>
+</html>

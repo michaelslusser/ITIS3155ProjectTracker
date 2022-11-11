@@ -39,6 +39,9 @@ def new_project():
         return redirect(url_for('index'))
     else:
         return render_template('new_project.html', user=a_user)
+@app.route('/view_project/<project_id>')
+def get_project(project_id):
+    return render_template('view_project.html', my_project=projects[int(project_id)], user=a_user)
 
 
 
