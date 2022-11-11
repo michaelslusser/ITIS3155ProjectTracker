@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Homepage</title>
+        <title>New Project</title>
         <!--styles-->
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
     </head>
@@ -13,7 +13,7 @@
         <nav>
             <!--Add other pages-->
             <a href="{{ url_for('index') }}">Home</a> ||
-            <a href="">Projects</a>            
+            <a href="{{ url_for('new_project') }}">Create Project</a>        
         </nav>
         <h2>Create new project below</h2>
         <form action="new_project" method="post">
@@ -31,3 +31,5 @@
             </p>
             <input type="submit" value="Add Project"/>
         </form>
+    </body>
+</html>
