@@ -1,11 +1,14 @@
 # import modules
 import os
 from flask import Flask
+from database import db
 from flask import render_template
 from flask import request
 from flask import redirect, url_for
 from database import db
-from models import *
+from models import User as User
+from models import Project as Project
+# IMPORT MORE FROM MODELS. (used to be from models import *)
 
 app = Flask(__name__)
 app.static_folder = './static'
@@ -17,16 +20,32 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 db.init_app(app)
 with app.app_context():
     db.create_all()
-a_user = {'id':1,'username':'Amal', 'email':'ajoshy@uncc.edu', 'password':'password'}
-projects = {1:{'title': 'First project', 'detail':'This is the first project', 'company_name': 'verizon' }}
+#a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+#projects = db.session.query(Project).all()
+# a_user = {'id':1,'username':'Amal', 'email':'ajoshy@uncc.edu', 'password':'password'}
+# projects = {1:{'title': 'First project', 'detail':'This is the first project', 'company_name': 'verizon' }}
 
 # routing
 
 # GET / - show the user the landing page
 @app.route('/')
 @app.route('/index')
+@app.route('/notes') # can delete this later if needed
 def index():
+    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+    projects = db.session.query(Project).all()
+
     return render_template('index.html',user=a_user,user_projects=projects)
+
+# VIEW PROJECT
+@app.route('/view_project/<project_id>')
+def get_project(project_id):
+    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+    my_project = db.session.query(Project).filter_by(id=project_id).one()
+    return render_template('view_project.html', user_projects=my_project, user=a_user)
+
+
+# ADD NEW PROJECT
 @app.route('/new_project', methods=['GET','POST'])
 def new_project():
     #projects = {'title':'First project', 'detail':'This is the first project', 'company_name': 'verizon' }
@@ -34,14 +53,15 @@ def new_project():
         title = request.form['title']
         text = request.form['detail']
         company = request.form['company_name']
-        id = len(projects)+1
-        projects[id] = {'title': title, 'detail': text, 'company_name': company}
+        new_record = Project(title, text, company)
+        db.session.add(new_record)
+        db.session.commit()
+        #id = len(projects)+1
+        #projects[id] = {'title': title, 'detail': text, 'company_name': company}
         return redirect(url_for('index'))
     else:
+        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu')
         return render_template('new_project.html', user=a_user)
-@app.route('/view_project/<project_id>')
-def get_project(project_id):
-    return render_template('view_project.html', my_project=projects[int(project_id)], user=a_user)
 
 
 
