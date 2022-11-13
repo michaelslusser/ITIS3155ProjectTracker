@@ -51,11 +51,25 @@ def new_project():
         db.session.commit()
         return redirect(url_for('index'))
     else:
-        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu')
+        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
         return render_template('new_project.html', user=a_user)
 
+# EDIT PROJECT (NOT WORKING YET)
+@app.route('/project/edit/<project_id>')
+def edit_project(project_id):
+    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+    my_project = db.session.query(Project).filter_by(id=project_id).one()
 
+    return render_template('new_project.html',project=my_project,user=a_user)
 
+# DELETE PROJECT
+@app.route('/project/delete/<project_id>',methods=['POST'])
+def delete_project(project_id):
+    my_project = db.session.query(Project).filter_by(id=project_id).one()
+    db.session.delete(my_project)
+    db.session.commit()
+
+    return redirect(url_for('index'))
 
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
