@@ -20,12 +20,12 @@
         <div class="box">
             <table class="insideBox">
                 <!--Add start of for loop here-->
-                {% for project_id in user_projects %}
+                {% for project in user_projects %} 
                 <tr>
                     <!--Add in other <td> elements for whatever you need-->
-                    <td class="tableRow"><a href="{{ url_for('get_project', project_id=project.id) }}">{{user_projects.title}}</a></td>
-                    <td class="tableRow">{{user_projects.detail}}</a></td>
-                    <td class="tableRow">{{user_projects.company_name}}</a></td>
+                    <td class="tableRow"><a href="{{ url_for('get_project', project_id=project.id) }}">{{project.title}}</a></td>
+                    <td class="tableRow">{{project.detail}}</a></td>
+                    <td class="tableRow">{{project.company_name}}</a></td>
                 </tr>
                 {% endfor %}
                 <!--Add end of for loop here-->
