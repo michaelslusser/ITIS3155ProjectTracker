@@ -6,9 +6,7 @@ from flask import render_template
 from flask import request
 from flask import redirect, url_for
 from database import db
-from models import User as User
-from models import Project as Project
-# IMPORT MORE FROM MODELS. (used to be from models import *)
+from models import *
 
 app = Flask(__name__)
 app.static_folder = './static'
@@ -20,10 +18,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 db.init_app(app)
 with app.app_context():
     db.create_all()
-#a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-#projects = db.session.query(Project).all()
-# a_user = {'id':1,'username':'Amal', 'email':'ajoshy@uncc.edu', 'password':'password'}
-# projects = {1:{'title': 'First project', 'detail':'This is the first project', 'company_name': 'verizon' }}
 
 # routing
 
@@ -42,13 +36,12 @@ def index():
 def get_project(project_id):
     a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
     my_project = db.session.query(Project).filter_by(id=project_id).one()
-    return render_template('view_project.html', user_projects=my_project, user=a_user)
+    return render_template('view_project.html', project=my_project, user=a_user)
 
 
 # ADD NEW PROJECT
 @app.route('/new_project', methods=['GET','POST'])
 def new_project():
-    #projects = {'title':'First project', 'detail':'This is the first project', 'company_name': 'verizon' }
     if request.method == 'POST':
         title = request.form['title']
         text = request.form['detail']
@@ -56,8 +49,6 @@ def new_project():
         new_record = Project(title, text, company)
         db.session.add(new_record)
         db.session.commit()
-        #id = len(projects)+1
-        #projects[id] = {'title': title, 'detail': text, 'company_name': company}
         return redirect(url_for('index'))
     else:
         a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu')

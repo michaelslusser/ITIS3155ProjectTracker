@@ -15,7 +15,8 @@
             <a href="{{ url_for('index') }}">Home</a> ||
             <a href="{{ url_for('new_project') }}">Create Project</a>            
         </nav>
-        <h2>{{my_project.title}}</h2>
-        <h3>{{my_project.detail}}</h3>
+        <h2>Title: {{project.title}}</h2>
+        <h3>Description: {{project.detail}}</h3>
+        <h4>Company Name: {{project.company_name}}</h4>
     </body>
 </html>
