@@ -1,35 +1,57 @@
 <!-- landing page for app -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>New Project</title>
-        <!--styles-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
-    </head>
-    <body>
-        <h1>Welcome {{user.username}}!</h1>
-        <nav>
-            <!--Add other pages-->
-            <a href="{{ url_for('index') }}">Home</a> ||
-            <a href="{{ url_for('new_project') }}">Create Project</a>        
-        </nav>
-        <h2>Create new project below</h2>
-        <form action="new_project" method="post">
-            <p><label>Title </label></p><p>  <input type="text" name="title"/></p>
-            <p><label>Note </label></p>
-            <p>
-                <textarea name="detail"  rows="6" cols="0" >
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Project</title>
+    <!--styles-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+</head>
+
+<body>
+    <h1>Welcome {{user.username}}!</h1>
+    <nav>
+        <!--Add other pages-->
+        <a href="{{ url_for('index') }}">Home</a> ||
+        <a href="{{ url_for('new_project') }}">Create Project</a>
+    </nav>
+    <h2>Create/Update Project Below</h2>
+    {% if project %}
+        <form action="{{url_for('edit_project',project_id=project.id)}}" method="POST">
+    {% else %}
+        <form action="new" method="POST">
+    {% endif %}
+        <p><label>Title </label></p>
+        <p><input type="text" name="title" value="{% if project %}{{project.title}} {% endif %}" /></p>
+        <p><label>Description </label></p>
+        <p>
+                <textarea name="detail" rows="6" cols="0">
+                    {% if project %}
+                        {{project.detail}}
+                    {% else %}
                         Add a description of your project here
+                    {% endif %}
                 </textarea>
             </p>
             <p>
-                <textarea name="company_name"  rows="6" cols="0" >
+                <textarea name="company_name" rows="6" cols="0">
+                    {% if project %}
+                        {{project.company_name}}
+                    {% else %}
                         Add a company name here
+                    {% endif %}
                 </textarea>
             </p>
-            <input type="submit" value="Add Project"/>
+            <p>
+                {% if project %}
+                <input type="submit" value="Update Project" />
+                {% else %}
+                <input type="submit" value="Add Project" />
+                {% endif %}
+            </p>
         </form>
-    </body>
+</body>
+
 </html>

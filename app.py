@@ -55,12 +55,23 @@ def new_project():
         return render_template('new_project.html', user=a_user)
 
 # EDIT PROJECT (NOT WORKING YET)
-@app.route('/project/edit/<project_id>')
+@app.route('/project/edit/<project_id>',methods=['GET','POST'])
 def edit_project(project_id):
-    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-    my_project = db.session.query(Project).filter_by(id=project_id).one()
-
-    return render_template('new_project.html',project=my_project,user=a_user)
+    if request.method == 'POST':
+        title = request.form['title']
+        detail = request.form['detail']
+        company_name = request.form['company_name']
+        project = db.session.query(Project).filter_by(id=project_id).one()
+        project.title = title
+        project.detail = detail
+        project.company_name = company_name
+        db.session.add(project)
+        db.session.commit()
+        return redirect(url_for('index'))
+    else:
+        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+        my_project = db.session.query(Project).filter_by(id=project_id).one()
+        return render_template('new_project.html',project=my_project,user=a_user)
 
 # DELETE PROJECT
 @app.route('/project/delete/<project_id>',methods=['POST'])
