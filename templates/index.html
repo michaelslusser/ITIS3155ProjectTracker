@@ -32,7 +32,7 @@
                     <td class="tableRow">{{project.company_name}}</a></td>
                     <!--EDIT NOT WORKING YET-->
                     <td>
-                        <form action="{{url_for('edit_project',project_id=project.id)}}" method = "post">
+                        <form action="{{url_for('edit_project',project_id=project.id)}}" method = "get">
                             <input type="submit" value="Edit">
                         </form>
                     </td>
