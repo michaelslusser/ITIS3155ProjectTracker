@@ -35,7 +35,8 @@ def index():
 def get_project(project_id):
     a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
     my_project = find_project_by_id(project_id)
-    return render_template('view_project.html', project=my_project, user=a_user)
+    tasks = find_tasks_by_project(project_id)
+    return render_template('view_project.html', project=my_project, user=a_user, proj_tasks=tasks)
 
 # ADD NEW PROJECT
 @app.route('/new_project', methods=['GET','POST'])
@@ -69,11 +70,20 @@ def edit_project(project_id):
 def delete_project(project_id):
     remove_project(project_id)
     return redirect(url_for('index'))
+
 #Placeholder code for creating new task
-@app.route('/new_task', methods=['GET','POST'])
-def new_task():
-    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-    return render_template('new_task.html', user=a_user)
+@app.route('/view_project/<project_id>/new_task', methods=['GET','POST'])
+def new_task(project_id):
+    if request.method == 'POST':
+        my_project = find_project_by_id(project_id)
+        title = request.form['title']
+        text = request.form['description']
+        create_task(my_project.id, title, text)
+        return redirect(url_for('get_project', project_id=my_project.id))
+    else:
+        my_project = find_project_by_id(project_id)
+        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+        return render_template('new_task.html', user=a_user, project=my_project)
 
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)

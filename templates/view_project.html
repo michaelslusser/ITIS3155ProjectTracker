@@ -17,9 +17,21 @@
         </nav>
         <div class="projectView">
             <h2>{{project.title}}</h2>
-            <form action="{{ url_for('new_task') }}">
+            <form action="{{ url_for('new_task', project_id=project.id)}}">
                 <input type="submit" value="Create New Task">
             </form>
+        </div>
+        <div class="box">
+            <table class="insideBox">
+                {% for task in proj_tasks%}
+                <!--Add start of for loop here-->
+                <tr>
+                    <td>{{task.title}}</td>
+                </tr>
+                <!--Add end of for loop here-->
+                {% endfor %}
+            </table>
+
         </div>
     </body>
 </html>
