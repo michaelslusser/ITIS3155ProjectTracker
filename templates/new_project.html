@@ -21,7 +21,7 @@
     {% if project %}
         <form action="{{url_for('edit_project',project_id=project.id)}}" method="POST">
     {% else %}
-        <form action="new" method="POST">
+        <form action="{{url_for('new_project')}}" method="POST">
     {% endif %}
         <p><label>Title </label></p>
         <p><input type="text" name="title" value="{% if project %}{{project.title}} {% endif %}" /></p>
