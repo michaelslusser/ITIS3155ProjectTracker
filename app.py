@@ -54,7 +54,7 @@ def new_project():
         a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
         return render_template('new_project.html', user=a_user)
 
-# EDIT PROJECT (NOT WORKING YET)
+# EDIT PROJECT
 @app.route('/project/edit/<project_id>',methods=['GET','POST'])
 def edit_project(project_id):
     if request.method == 'POST':
@@ -81,6 +81,11 @@ def delete_project(project_id):
     db.session.commit()
 
     return redirect(url_for('index'))
+#Placeholder code for creating new task
+@app.route('/new_task', methods=['GET','POST'])
+def new_task():
+    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+    return render_template('new_task.html', user=a_user)
 
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
