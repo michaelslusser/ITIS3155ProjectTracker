@@ -51,31 +51,31 @@ class User(db.Model):
 # functions to interact with models
 # read operations
 def find_projects():
-    return db.query(Project).all()
+    return db.session.query(Project).all()
 
 def find_project_by_id(p_id):
-    return db.query(Project).filter_by(id = p_id).one()
+    return db.session.query(Project).filter_by(id = p_id).one()
 
 def find_tasks_by_project(p_id):
-    return db.query(Task).filter_by(project_id = p_id).all()
+    return db.session.query(Task).filter_by(project_id = p_id).all()
 
 def find_task_by_id(p_id, t_id):
-    return db.query(Task).filter_by(project_id = p_id, id = t_id).one()
+    return db.session.query(Task).filter_by(project_id = p_id, id = t_id).one()
 
 def find_comments_by_task(t_id):
-    return db.query(Comment).filter_by(task_id = t_id).all()
+    return db.session.query(Comment).filter_by(task_id = t_id).all()
 
 def find_comment_by_id(t_id, c_id):
-    return db.query(Comment).filter_by(task_id = t_id, id = c_id).one()
+    return db.session.query(Comment).filter_by(task_id = t_id, id = c_id).one()
 
 def find_users():
-    return db.query(User).all()
+    return db.session.query(User).all()
 
 def find_user_by_id(u_id):
-    return db.query(User).filter_by(id = u_id).one()
+    return db.session.query(User).filter_by(id = u_id).one()
 
 def find_users_by_email(u_email):
-    return db.query(User).filter_by(email = u_email).all()
+    return db.session.query(User).filter_by(email = u_email).all()
 
 # create operations
 def create_project(title, detail, company_name):

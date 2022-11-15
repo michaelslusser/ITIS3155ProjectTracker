@@ -27,17 +27,15 @@ with app.app_context():
 @app.route('/notes') # can delete this later if needed
 def index():
     a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-    projects = db.session.query(Project).all()
-
+    projects = find_projects()
     return render_template('index.html',user=a_user,user_projects=projects)
 
 # VIEW PROJECT
 @app.route('/view_project/<project_id>')
 def get_project(project_id):
     a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-    my_project = db.session.query(Project).filter_by(id=project_id).one()
+    my_project = find_project_by_id(project_id)
     return render_template('view_project.html', project=my_project, user=a_user)
-
 
 # ADD NEW PROJECT
 @app.route('/new_project', methods=['GET','POST'])
@@ -46,9 +44,7 @@ def new_project():
         title = request.form['title']
         text = request.form['detail']
         company = request.form['company_name']
-        new_record = Project(title, text, company)
-        db.session.add(new_record)
-        db.session.commit()
+        create_project(title, text, company)
         return redirect(url_for('index'))
     else:
         a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
@@ -61,25 +57,17 @@ def edit_project(project_id):
         title = request.form['title']
         detail = request.form['detail']
         company_name = request.form['company_name']
-        project = db.session.query(Project).filter_by(id=project_id).one()
-        project.title = title
-        project.detail = detail
-        project.company_name = company_name
-        db.session.add(project)
-        db.session.commit()
+        update_project(project_id, title, detail, company_name)
         return redirect(url_for('index'))
     else:
         a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-        my_project = db.session.query(Project).filter_by(id=project_id).one()
+        my_project = find_project_by_id(project_id)
         return render_template('new_project.html',project=my_project,user=a_user)
 
 # DELETE PROJECT
 @app.route('/project/delete/<project_id>',methods=['POST'])
 def delete_project(project_id):
-    my_project = db.session.query(Project).filter_by(id=project_id).one()
-    db.session.delete(my_project)
-    db.session.commit()
-
+    remove_project(project_id)
     return redirect(url_for('index'))
 
 # start server at http://127.0.0.1:5000
