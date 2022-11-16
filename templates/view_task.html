@@ -1,0 +1,26 @@
+<!-- landing page for app -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>View Project</title>
+        <!--styles-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+    </head>
+    <body>
+        <h1>Welcome {{user.username}}!</h1>
+        <nav>
+            <!--Add other pages-->
+            <a href="{{ url_for('index') }}">Home</a> ||
+            <a href="{{ url_for('new_project') }}">Create Project</a>            
+        </nav>
+        <div class="projectView">
+            <h2>{{task.title}}</h2>
+            <h3>{{task.description}}</h3>
+            <form action="{{ url_for('get_project', project_id=project.id)}}" method = "get">
+                <input type="submit" value="Back">
+            </form>
+        </div>
+    </body>
+</html>
