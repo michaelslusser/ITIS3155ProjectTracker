@@ -145,9 +145,9 @@ def remove_project(p_id):
     db.session.delete(project)
     db.session.commit()
 
-def remove_task(t_id):
+def remove_task(t_id, project_id):
     # get task from db and delete
-    task = find_task_by_id(t_id)
+    task = find_task_by_id(project_id, t_id)
     db.session.delete(task)
     db.session.commit()
 

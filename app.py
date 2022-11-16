@@ -108,6 +108,12 @@ def view_task(project_id, t_id):
     #testing
     return render_template('view_task.html', project=my_project, user=a_user, task=my_task)
 
+@app.route('/view_project/<project_id>/delete/<t_id>', methods=['POST'])
+def delete_task(project_id, t_id):
+    my_project = find_project_by_id(project_id)
+    remove_task(t_id, project_id)
+    return redirect(url_for('get_project', project_id=my_project.id))
+
 
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
