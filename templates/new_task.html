@@ -17,17 +17,29 @@
         <a href="{{ url_for('new_project') }}">Create Project</a>
     </nav>
     <h2>Create/Update Task Below</h2>
-        <form action="{{url_for('new_task', project_id=project.id)}}" method="POST">
+        {% if task %}
+            <form action="{{url_for('edit_task',project_id=project.id, t_id=task.id)}}" method="POST">
+        {% else %}
+            <form action="{{url_for('new_task', project_id=project.id)}}" method="POST">
+        {% endif %}
         <p><label>Title </label></p>
-        <p><input type="text" name="title" value="" /></p>
+        <p><input type="text" name="title" value="{% if task %} {{task.title}} {% endif %}" /></p>
         <p><label>Description</label></p>
             <p>
                 <textarea name="description" rows="6" cols="0">
-                        Add a description
+                    {% if task %}
+                        {{task.description}}
+                    {% else %}
+                        Add a description of the task 
+                    {% endif %}
                 </textarea>
             </p>
             <p>
-                <input type="submit" value="Add Task" />
+                {% if task %}
+                    <input type="submit" value="Update Task" />
+                {% else %}
+                    <input type="submit" value="Add Task" />
+                {% endif %}
             </p>
         </form>
 </body>

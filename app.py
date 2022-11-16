@@ -85,5 +85,20 @@ def new_task(project_id):
         a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
         return render_template('new_task.html', user=a_user, project=my_project)
 
+@app.route('/view_project/<project_id>/edit/<t_id>', methods=['GET','POST'])
+def edit_task(project_id, t_id):
+    if request.method == 'POST':
+        my_project = find_project_by_id(project_id)
+        my_task = find_task_by_id(project_id, t_id)
+        title = request.form['title']
+        text = request.form['description']
+        update_task(my_task.id, my_task.project_id, title, text)
+        return redirect(url_for('get_project', project_id=my_project.id))
+    else:
+        my_project = find_project_by_id(project_id)
+        my_task = find_task_by_id(project_id, t_id)
+        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+        return render_template('new_task.html', user=a_user, project=my_project, task=my_task)
+
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)

@@ -27,6 +27,12 @@
                 <!--Add start of for loop here-->
                 <tr>
                     <td>{{task.title}}</td>
+                    <td>{{task.description}}</td>
+                    <td>
+                        <form action="{{url_for('edit_task',project_id=project.id,t_id=task.id)}}" method = "get">
+                            <input type="submit" value="Edit">
+                        </form>
+                    </td>
                 </tr>
                 <!--Add end of for loop here-->
                 {% endfor %}

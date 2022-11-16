@@ -111,7 +111,7 @@ def update_project(p_id, title, detail, company):
 
 def update_task(t_id, project_id, title, description):
     # get task from db and update values
-    task = find_task_by_id(t_id)
+    task = find_task_by_id(project_id, t_id)
     task.project_id = project_id
     task.title = title
     task.description = description
