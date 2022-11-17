@@ -29,12 +29,14 @@
         <p>
                 <textarea name="detail" rows="6" cols="0">
                     {% if project %}
-                        {{project.detail}}
+                        {strip}{{project.detail}}{/strip}
                     {% else %}
-                        Add a description of your project here
+                        {strip}Add a description of your project here{/strip}
                     {% endif %}
                 </textarea>
             </p>
+        
+            <p><label>Company Name </label></p>
             <p>
                 <textarea name="company_name" rows="6" cols="0">
                     {% if project %}

@@ -11,18 +11,22 @@
     <body>
         <h1>Welcome {{user.username}}!</h1>
         <nav>
+
             <!--Add other pages-->
             <a href="{{ url_for('index') }}">Home</a> ||
             <a href="{{ url_for('new_project') }}">Create Project</a>            
         </nav>
+        
         <div class="projectView">
             <h2>{{project.title}}</h2>
             <form action="{{ url_for('new_task', project_id=project.id)}}">
                 <input type="submit" value="Create New Task">
             </form>
         </div>
+        <h3>Title&emsp;Description</h3>
         <div class="box">
-            <table class="insideBox">
+
+            <table class="insideBox"> 
                 {% for task in proj_tasks%}
                 <!--Add start of for loop here-->
                 <tr>
