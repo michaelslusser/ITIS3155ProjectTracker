@@ -7,6 +7,7 @@ from flask import request
 from flask import redirect, url_for
 from database import db
 from models import *
+from forms import *
 
 app = Flask(__name__)
 app.static_folder = './static'

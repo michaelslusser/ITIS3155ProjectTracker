@@ -15,7 +15,7 @@ class Project(db.Model):
 # Task model - contains task information for associated project_id
 class Task(db.Model):
     id = db.Column('id', db.Integer, primary_key = True)
-    project_id = db.Column('project_id', db.Integer)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     title = db.Column('title', db.String(200))
     description = db.Column('description', db.String(1000))
 
@@ -27,7 +27,7 @@ class Task(db.Model):
 # Comment model - contains comment information for associated task_id
 class Comment(db.Model):
     id = db.Column('id', db.Integer, primary_key = True)
-    task_id = db.Column('task_id', db.Integer)
+    task_id = db.Column(db.Integer, db.ForeignKey('task.id'), nullable=False)
     name = db.Column('name', db.String(100))
     comment = db.Column('comment', db.String(300))
 
@@ -41,7 +41,7 @@ class User(db.Model):
     id = db.Column('id', db.Integer, primary_key = True)
     username = db.Column('username', db.String(20))
     email = db.Column('email', db.String(50))
-    password = db.Column('password', db.String(30))
+    password = db.Column('password', db.String(30), nullable=False)
     
     def __init__(self, username, email, password):
         self.username = username
