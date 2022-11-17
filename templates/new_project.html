@@ -24,34 +24,24 @@
         <form action="{{url_for('new_project')}}" method="POST">
     {% endif %}
         <p><label>Title </label></p>
-        <p><input type="text" name="title" value="{% if project %}{{project.title}} {% endif %}" /></p>
+        <p><input type="text" name="title" value="{% if project %}{{project.title}}{% endif %}" /></p>
         <p><label>Description </label></p>
         <p>
-                <textarea name="detail" rows="6" cols="0">
-                    {% if project %}
-                        {{project.detail}}
-                    {% else %}
-                        Add a description of your project here
-                    {% endif %}
-                </textarea>
-            </p>
-            <p>
-                <textarea name="company_name" rows="6" cols="0">
-                    {% if project %}
-                        {{project.company_name}}
-                    {% else %}
-                        Add a company name here
-                    {% endif %}
-                </textarea>
-            </p>
-            <p>
-                {% if project %}
+            {% if project %}
+                <textarea name="detail" rows="6" cols="0">{{project.detail}}</textarea>
+            {% else %}
+                <textarea name="detail" rows="6" cols="0">Add a description of your project here</textarea>
+            {% endif %}
+        </p>
+        <p><input type="text" name="company_name" value="{% if project %}{{project.company_name}}{% endif %}" /></p>
+        <p>
+            {% if project %}
                 <input type="submit" value="Update Project" />
-                {% else %}
+            {% else %}
                 <input type="submit" value="Add Project" />
-                {% endif %}
-            </p>
-        </form>
+            {% endif %}
+        </p>
+    </form>
 </body>
 
 </html>

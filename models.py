@@ -151,9 +151,9 @@ def remove_task(t_id, project_id):
     db.session.delete(task)
     db.session.commit()
 
-def remove_comment(c_id):
+def remove_comment(c_id, task_id):
     # get comment from db and delete
-    comment = find_comment_by_id(c_id)
+    comment = find_comment_by_id(task_id, c_id)
     db.session.delete(comment)
     db.session.commit()
 

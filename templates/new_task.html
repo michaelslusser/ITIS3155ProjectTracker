@@ -23,16 +23,14 @@
             <form action="{{url_for('new_task', project_id=project.id)}}" method="POST">
         {% endif %}
         <p><label>Title </label></p>
-        <p><input type="text" name="title" value="{% if task %} {{task.title}} {% endif %}" /></p>
+        <p><input type="text" name="title" value="{% if task %}{{task.title}}{% endif %}" /></p>
         <p><label>Description</label></p>
             <p>
-                <textarea name="description" rows="6" cols="0">
-                    {% if task %}
-                        {{task.description}}
-                    {% else %}
-                        Add a description of the task 
-                    {% endif %}
-                </textarea>
+                {% if task %}
+                    <textarea name="description" rows="6" cols="0">{{task.description}}</textarea>
+                {% else %}
+                    <textarea name="description" rows="6" cols="0">Add a description of the task</textarea>
+                {% endif %}
             </p>
             <p>
                 {% if task %}
