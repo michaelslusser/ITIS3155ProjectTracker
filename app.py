@@ -8,12 +8,15 @@ from flask import redirect, url_for
 from database import db
 from models import *
 from forms import *
+import bcrypt
+from flask import session
 
 app = Flask(__name__)
 app.static_folder = './static'
 app.template_folder = './templates'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project_app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
+app.config['SECRET_KEY'] = 'SE3155'
 
 # initialize the database and bind it to flask
 db.init_app(app)
@@ -27,9 +30,13 @@ with app.app_context():
 @app.route('/index')
 @app.route('/notes') # can delete this later if needed
 def index():
-    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-    projects = find_projects()
-    return render_template('index.html',user=a_user,user_projects=projects)
+    if session.get('user'):
+        projects = find_projects()
+        return render_template("index.html", user=session['user'], user_projects=projects)
+    return render_template("index.html")
+    #a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+    #projects = find_projects()
+    #return render_template('index.html',user=a_user,user_projects=projects)
 
 # VIEW PROJECT
 @app.route('/view_project/<project_id>')
@@ -114,6 +121,25 @@ def delete_task(project_id, t_id):
     my_project = find_project_by_id(project_id)
     remove_task(t_id, project_id)
     return redirect(url_for('get_project', project_id=my_project.id))
+
+@app.route('/register', methods = ['POST', 'GET'])
+def register():
+    form = RegisterForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        h_password = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+        
+        username = request.form['username']
+        
+        new_user = User(username, request.form['email'], h_password)
+        
+        create_user(username, request.form['email'], h_password)
+
+        session['user'] = username
+        session['user_id'] = new_user.id  
+        
+        return redirect(url_for('index'))
+    return render_template('register.html', form=form)
+
 
 
 # start server at http://127.0.0.1:5000
