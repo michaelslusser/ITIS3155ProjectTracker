@@ -42,37 +42,44 @@ def index():
 # VIEW PROJECT
 @app.route('/view_project/<project_id>')
 def get_project(project_id):
-    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-    my_project = find_project_by_id(project_id)
-    tasks = find_tasks_by_project(project_id)
-    return render_template('view_project.html', project=my_project, user=a_user, proj_tasks=tasks)
+    if session.get('user'):
+        my_project = find_project_by_id(project_id)
+        tasks = find_tasks_by_project(project_id)
+        return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks)
+    form = RegisterForm()
+    return render_template("register.html", form=form)
 
 # ADD NEW PROJECT
 @app.route('/new_project', methods=['GET','POST'])
 def new_project():
-    if request.method == 'POST':
-        title = request.form['title']
-        text = request.form['detail']
-        company = request.form['company_name']
-        create_project(title, text, company)
-        return redirect(url_for('index'))
-    else:
-        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-        return render_template('new_project.html', user=a_user)
+    if session.get('user'):
+        if request.method == 'POST':
+            title = request.form['title']
+            text = request.form['detail']
+            company = request.form['company_name']
+            create_project(title, text, company)
+            return redirect(url_for('index'))
+        else:
+            return render_template('new_project.html', user=session['user'])
+    form = RegisterForm()
+    return render_template('register.html', form=form)
 
 # EDIT PROJECT
 @app.route('/project/edit/<project_id>',methods=['GET','POST'])
 def edit_project(project_id):
-    if request.method == 'POST':
-        title = request.form['title']
-        detail = request.form['detail']
-        company_name = request.form['company_name']
-        update_project(project_id, title, detail, company_name)
-        return redirect(url_for('index'))
-    else:
-        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-        my_project = find_project_by_id(project_id)
-        return render_template('new_project.html',project=my_project,user=a_user)
+    if session.get('user'):
+        if request.method == 'POST':
+            title = request.form['title']
+            detail = request.form['detail']
+            company_name = request.form['company_name']
+            update_project(project_id, title, detail, company_name)
+            return redirect(url_for('index'))
+        else:
+            a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
+            my_project = find_project_by_id(project_id)
+            return render_template('new_project.html',project=my_project,user=a_user)
+    form = RegisterForm()
+    return render_template('register.html', form=form)
 
 # DELETE PROJECT
 @app.route('/project/delete/<project_id>',methods=['POST'])
@@ -83,45 +90,54 @@ def delete_project(project_id):
 #Placeholder code for creating new task
 @app.route('/view_project/<project_id>/new_task', methods=['GET','POST'])
 def new_task(project_id):
-    if request.method == 'POST':
-        my_project = find_project_by_id(project_id)
-        title = request.form['title']
-        text = request.form['description']
-        create_task(my_project.id, title, text)
-        return redirect(url_for('get_project', project_id=my_project.id))
-    else:
-        my_project = find_project_by_id(project_id)
-        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-        return render_template('new_task.html', user=a_user, project=my_project)
+    if session.get('user'):
+        if request.method == 'POST':
+            my_project = find_project_by_id(project_id)
+            title = request.form['title']
+            text = request.form['description']
+            create_task(my_project.id, title, text)
+            return redirect(url_for('get_project', project_id=my_project.id))
+        else:
+            my_project = find_project_by_id(project_id)
+            return render_template('new_task.html', user=session['user'], project=my_project)
+    form = RegisterForm()
+    return render_template('register.html', form=form)
 
 @app.route('/view_project/<project_id>/edit/<t_id>', methods=['GET','POST'])
 def edit_task(project_id, t_id):
-    if request.method == 'POST':
-        my_project = find_project_by_id(project_id)
-        my_task = find_task_by_id(project_id, t_id)
-        title = request.form['title']
-        text = request.form['description']
-        update_task(my_task.id, my_task.project_id, title, text)
-        return redirect(url_for('get_project', project_id=my_project.id))
-    else:
-        my_project = find_project_by_id(project_id)
-        my_task = find_task_by_id(project_id, t_id)
-        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-        return render_template('new_task.html', user=a_user, project=my_project, task=my_task)
+    if session.get('user'):
+        if request.method == 'POST':
+            my_project = find_project_by_id(project_id)
+            my_task = find_task_by_id(project_id, t_id)
+            title = request.form['title']
+            text = request.form['description']
+            update_task(my_task.id, my_task.project_id, title, text)
+            return redirect(url_for('get_project', project_id=my_project.id))
+        else:
+            my_project = find_project_by_id(project_id)
+            my_task = find_task_by_id(project_id, t_id)
+            return render_template('new_task.html', user=session['user'], project=my_project, task=my_task)
+    form = RegisterForm()
+    return render_template('register.html', form=form)
 
 @app.route('/view_project/<project_id>/view_task/<t_id>', methods=['GET','POST'])
 def view_task(project_id, t_id):
-    a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-    my_project = find_project_by_id(project_id)
-    my_task = find_task_by_id(project_id, t_id)
-    #testing
-    return render_template('view_task.html', project=my_project, user=a_user, task=my_task)
+    if session.get('user'):
+        my_project = find_project_by_id(project_id)
+        my_task = find_task_by_id(project_id, t_id)
+        #testing
+        return render_template('view_task.html', project=my_project, user=session['user'], task=my_task)
+    form = RegisterForm()
+    return render_template('register.html', form=form)
 
 @app.route('/view_project/<project_id>/delete/<t_id>', methods=['POST'])
 def delete_task(project_id, t_id):
-    my_project = find_project_by_id(project_id)
-    remove_task(t_id, project_id)
-    return redirect(url_for('get_project', project_id=my_project.id))
+    if session.get('user'):
+        my_project = find_project_by_id(project_id)
+        remove_task(t_id, project_id)
+        return redirect(url_for('get_project', project_id=my_project.id))
+    form = RegisterForm()
+    return render_template('register.html', form=form)
 
 @app.route('/register', methods = ['POST', 'GET'])
 def register():
