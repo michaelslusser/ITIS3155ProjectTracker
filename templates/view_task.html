@@ -16,7 +16,9 @@
             </h3>
             <!--Add other pages-->
             <a href="{{ url_for('index') }}">Home</a> ||
-            <a href="{{ url_for('new_project') }}">Create Project</a>            
+            <a href="{{ url_for('new_project') }}">Create Project</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            
         </nav>
         <div class="projectView">
             <h2>{{task.title}}</h2>
