@@ -33,7 +33,8 @@ def index():
     if session.get('user'):
         projects = find_projects()
         return render_template("index.html", user=session['user'], user_projects=projects)
-    return render_template("index.html")
+    else:
+        return redirect(url_for('login'))
     #a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
     #projects = find_projects()
     #return render_template('index.html',user=a_user,user_projects=projects)
@@ -42,8 +43,6 @@ def index():
 @app.route('/view_project/<project_id>')
 def get_project(project_id):
     if session.get('user'):
-
-        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
         my_project = find_project_by_id(project_id)
         tasks = find_tasks_by_project(project_id)
         return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks)
@@ -61,10 +60,10 @@ def new_project():
             create_project(title, text, company)
             return redirect(url_for('index'))
         else:
-            a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-            return render_template('new_project.html', user=a_user)
+            return render_template('new_project.html', user=session['user'])
     else:
         return redirect(url_for('login'))
+
 # EDIT PROJECT
 @app.route('/project/edit/<project_id>',methods=['GET','POST'])
 def edit_project(project_id):
@@ -81,6 +80,7 @@ def edit_project(project_id):
             return render_template('new_project.html',project=my_project,user=a_user)
     else:
         return redirect(url_for('login'))
+
 # DELETE PROJECT
 @app.route('/project/delete/<project_id>',methods=['POST'])
 def delete_project(project_id):
@@ -101,10 +101,10 @@ def new_task(project_id):
             return redirect(url_for('get_project', project_id=my_project.id))
         else:
             my_project = find_project_by_id(project_id)
-            a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-            return render_template('new_task.html', user=a_user, project=my_project)
+            return render_template('new_task.html', user=session['user'], project=my_project)
     else:
         return redirect(url_for('login'))
+
 @app.route('/view_project/<project_id>/edit/<t_id>', methods=['GET','POST'])
 def edit_task(project_id, t_id):
     if session.get('user'):
@@ -118,18 +118,17 @@ def edit_task(project_id, t_id):
         else:
             my_project = find_project_by_id(project_id)
             my_task = find_task_by_id(project_id, t_id)
-            a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-            return render_template('new_task.html', user=a_user, project=my_project, task=my_task)
+            return render_template('new_task.html', user=session['user'], project=my_project, task=my_task)
     else:
         return redirect(url_for('login'))
+
 @app.route('/view_project/<project_id>/view_task/<t_id>', methods=['GET','POST'])
 def view_task(project_id, t_id):
     if session.get('user'):
-        a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
         my_project = find_project_by_id(project_id)
         my_task = find_task_by_id(project_id, t_id)
         #testing
-        return render_template('view_task.html', project=my_project, user=a_user, task=my_task)
+        return render_template('view_task.html', project=my_project, user=session['user'], task=my_task)
     else:
         return redirect(url_for('login'))
 @app.route('/view_project/<project_id>/delete/<t_id>', methods=['POST'])
@@ -140,6 +139,7 @@ def delete_task(project_id, t_id):
         return redirect(url_for('get_project', project_id=my_project.id))
     else:
         return redirect(url_for('login'))
+
 @app.route('/register', methods = ['POST', 'GET'])
 def register():
     form = RegisterForm()
