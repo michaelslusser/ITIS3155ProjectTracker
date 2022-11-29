@@ -33,7 +33,8 @@ def index():
     if session.get('user'):
         projects = find_projects()
         return render_template("index.html", user=session['user'], user_projects=projects)
-    return render_template("index.html")
+    form = RegisterForm()
+    return render_template("register.html", form=form)
     #a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
     #projects = find_projects()
     #return render_template('index.html',user=a_user,user_projects=projects)
