@@ -33,8 +33,7 @@ def index():
     if session.get('user'):
         projects = find_projects()
         return render_template("index.html", user=session['user'], user_projects=projects)
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
     #a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
     #projects = find_projects()
     #return render_template('index.html',user=a_user,user_projects=projects)
@@ -46,8 +45,7 @@ def get_project(project_id):
         my_project = find_project_by_id(project_id)
         tasks = find_tasks_by_project(project_id)
         return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks)
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 # ADD NEW PROJECT
 @app.route('/new_project', methods=['GET','POST'])
@@ -61,8 +59,7 @@ def new_project():
             return redirect(url_for('index'))
         else:
             return render_template('new_project.html', user=session['user'])
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 # EDIT PROJECT
 @app.route('/project/edit/<project_id>',methods=['GET','POST'])
@@ -75,11 +72,9 @@ def edit_project(project_id):
             update_project(project_id, title, detail, company_name)
             return redirect(url_for('index'))
         else:
-            a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
             my_project = find_project_by_id(project_id)
-            return render_template('new_project.html',project=my_project,user=a_user)
-    else:
-        return redirect(url_for('login'))
+            return render_template('new_project.html', project=my_project, user=session['user'])
+    return redirect(url_for('login'))
 
 # DELETE PROJECT
 @app.route('/project/delete/<project_id>',methods=['POST'])
@@ -87,8 +82,8 @@ def delete_project(project_id):
     if session.get('user'):
         remove_project(project_id)
         return redirect(url_for('index'))
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
+
 #Placeholder code for creating new task
 @app.route('/view_project/<project_id>/new_task', methods=['GET','POST'])
 def new_task(project_id):
@@ -102,8 +97,7 @@ def new_task(project_id):
         else:
             my_project = find_project_by_id(project_id)
             return render_template('new_task.html', user=session['user'], project=my_project)
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 @app.route('/view_project/<project_id>/edit/<t_id>', methods=['GET','POST'])
 def edit_task(project_id, t_id):
@@ -119,8 +113,7 @@ def edit_task(project_id, t_id):
             my_project = find_project_by_id(project_id)
             my_task = find_task_by_id(project_id, t_id)
             return render_template('new_task.html', user=session['user'], project=my_project, task=my_task)
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 @app.route('/view_project/<project_id>/view_task/<t_id>', methods=['GET','POST'])
 def view_task(project_id, t_id):
@@ -129,8 +122,8 @@ def view_task(project_id, t_id):
         my_task = find_task_by_id(project_id, t_id)
         #testing
         return render_template('view_task.html', project=my_project, user=session['user'], task=my_task)
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
+
 @app.route('/view_project/<project_id>/delete/<t_id>', methods=['POST'])
 def delete_task(project_id, t_id):
     if session.get('user'):
@@ -157,6 +150,7 @@ def register():
         
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     login_form = LoginForm()
@@ -179,6 +173,7 @@ def login():
     else:
         # form did not validate or GET request
         return render_template("login.html", form=login_form)
+
 @app.route('/logout')
 def logout():
     # check if a user is saved in session
@@ -186,7 +181,6 @@ def logout():
         session.clear()
 
     return redirect(url_for('index'))
-
 
 
 # start server at http://127.0.0.1:5000
