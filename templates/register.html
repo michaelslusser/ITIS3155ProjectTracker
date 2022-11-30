@@ -6,12 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Homepage</title>
         <!--styles-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='forms.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
     </head>
 
-
-
-<h2>Use this site to maintain and organize your notes.</h2>
 <div class="formwrapper">
     <h2 class="title">Register</h2>
     <form method="POST" action="/register">
