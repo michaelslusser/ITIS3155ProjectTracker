@@ -34,6 +34,7 @@
                 <textarea name="detail" rows="6" cols="0">Add a description of your project here</textarea>
             {% endif %}
         </p>
+        <p><label>Company Name</label></p>
         <p><input type="text" name="company_name" value="{% if project %}{{project.company_name}}{% endif %}" /></p>
         <p>
             {% if project %}
