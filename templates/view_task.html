@@ -11,9 +11,6 @@
     <body>
         <h1>Welcome {{user.username}}!</h1>
         <nav>
-            <h3>
-                Title&emsp;&emsp;&emsp;Description
-            </h3>
             <!--Add other pages-->
             <a href="{{ url_for('index') }}">Home</a> ||
             <a href="{{ url_for('new_project') }}">Create Project</a>
@@ -27,5 +24,18 @@
                 <input type="submit" value="Back">
             </form>
         </div>
+        <h2>Comments</h2>
+        <div class="commentsBox">
+            {% for comment in task_comments %}
+            <ul>{{ comment.name }}: {{ comment.comment }}</ul>
+            {% endfor %}
+        </div>
+        <form action="{{ url_for('new_comment', project_id=project.id, t_id=task.id) }}" method="post">
+            <div>
+                <h2 class="title">Add a comment</h2>
+                <textarea name="comment" rows="6" cols="0"></textarea>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
     </body>
 </html>

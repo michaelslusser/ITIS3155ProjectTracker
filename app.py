@@ -120,8 +120,9 @@ def view_task(project_id, t_id):
     if session.get('user'):
         my_project = find_project_by_id(project_id)
         my_task = find_task_by_id(project_id, t_id)
+        comments = find_comments_by_task(t_id)
         #testing
-        return render_template('view_task.html', project=my_project, user=session['user'], task=my_task)
+        return render_template('view_task.html', project=my_project, user=session['user'], task=my_task, task_comments=comments)
     return redirect(url_for('login'))
 
 @app.route('/view_project/<project_id>/delete/<t_id>', methods=['POST'])
@@ -181,6 +182,16 @@ def logout():
         session.clear()
 
     return redirect(url_for('index'))
+
+@app.route('/view_project/<project_id>/view_task/<t_id>/comment', methods=['POST'])
+def new_comment(t_id, project_id):
+    if session.get('user'):
+        comment_text = request.form['comment']
+        create_comment(int(t_id),session['user'], comment_text)
+        return redirect(url_for('view_task', project_id=project_id, t_id=t_id))
+    else:
+        return redirect(url_for('login'))
+
 
 
 # start server at http://127.0.0.1:5000

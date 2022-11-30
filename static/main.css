@@ -31,5 +31,10 @@ nav{
 }
 .projectView{
     text-align: center;
-    
+}
+.commentsBox{
+    border: 2px solid gray;
+    padding-bottom: 20px;
+    width: 200px;
+    padding-right: 20px;
 }
