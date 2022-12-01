@@ -6,14 +6,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Homepage</title>
         <!--styles-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+        {% if theme == 1 %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+        {% else %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='second.css')}}">
+        {% endif %}
     </head>
     <body>
-        <h1>Welcome {{user.username}}!</h1>
+        <h1>Welcome {{user}}!</h1>
         <nav>
             <!--Add other pages-->
             <a href="{{ url_for('index') }}">Home</a> ||
             <a href="{{ url_for('new_project') }}">Create Project</a> ||
+            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> ||
             <a href="{{ url_for('logout') }}">Logout</a>    
         </nav>
         <h2>Here are your projects</h2>

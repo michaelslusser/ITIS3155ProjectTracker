@@ -1,0 +1,40 @@
+/* webpage styling */
+h1{
+    color:black;
+    text-align: center;
+}
+h2{
+    color: brown;
+}
+body{
+    background:yellow;
+}
+
+nav{
+    text-align: center;
+}
+
+.box{
+    width: 100%;
+    height: 500px;
+    width: 25em;
+    text-align: center;
+}
+.insideBox{
+    background-color: white;
+    text-align: left;
+    border: 5px solid;
+    margin-bottom: 20px;
+}
+.tableRow{
+    border: 5px solid black;
+}
+.projectView{
+    text-align: center;
+}
+.commentsBox{
+    border: 2px solid gray;
+    padding-bottom: 20px;
+    width: 200px;
+    padding-right: 20px;
+}

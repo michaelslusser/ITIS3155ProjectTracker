@@ -42,11 +42,13 @@ class User(db.Model):
     username = db.Column('username', db.String(20))
     email = db.Column('email', db.String(50))
     password = db.Column('password', db.String(30), nullable=False)
+    theme = db.Column('theme', db.Integer, nullable=False)
     
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, password, theme):
         self.username = username
         self.email = email
         self.password = password
+        self.theme = theme
 
 # functions to interact with models
 # read operations
@@ -93,8 +95,8 @@ def create_comment(task_id, name, comment):
     db.session.add(comment)
     db.session.commit()
 
-def create_user(username, email, password):
-    user = User(username, email, password)
+def create_user(username, email, password, theme):
+    user = User(username, email, password, theme)
     db.session.add(user)
     db.session.commit()
 
@@ -128,12 +130,13 @@ def update_comment(c_id, name, comment):
     db.session.add(comment_object)
     db.session.commit()
 
-def update_user(u_id, username, email, password):
+def update_user(u_id, username, email, password, theme):
     # get user from db and update values
     user = find_user_by_id(u_id)
     user.username = username
     user.email = email
     user.password = password
+    user.theme = theme
     # push changes
     db.session.add(user)
     db.session.commit()

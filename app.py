@@ -28,11 +28,11 @@ with app.app_context():
 # GET / - show the user the landing page
 @app.route('/')
 @app.route('/index')
-@app.route('/notes') # can delete this later if needed
+@app.route('/projects') # can delete this later if needed
 def index():
     if session.get('user'):
         projects = find_projects()
-        return render_template("index.html", user=session['user'], user_projects=projects)
+        return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'])
     return redirect(url_for('login'))
     #a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
     #projects = find_projects()
@@ -142,12 +142,13 @@ def register():
         
         username = request.form['username']
         
-        new_user = User(username, request.form['email'], h_password)
+        new_user = User(username, request.form['email'], h_password, 2)
         
-        create_user(username, request.form['email'], h_password)
+        create_user(username, request.form['email'], h_password, 2)
 
         session['user'] = username
-        session['user_id'] = new_user.id  
+        session['user_id'] = new_user.id
+        session['user_theme'] = 2
         
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
@@ -164,6 +165,7 @@ def login():
             # password match add user info to session
             session['user'] = the_user.username
             session['user_id'] = the_user.id
+            session['user_theme'] = the_user.theme
             # render view
             return redirect(url_for('index'))
 
@@ -192,7 +194,19 @@ def new_comment(t_id, project_id):
     else:
         return redirect(url_for('login'))
 
-
+@app.route('/style/<theme_id>', methods=['GET','POST'])
+def change_style(theme_id):
+    if session.get('user'):
+        user = find_user_by_id(session['user_id'])
+        if request.method == 'POST':
+            update_user(session['user_id'], user.username, user.email, user.password, theme_id)
+            after_user = find_user_by_id(session['user_id'])
+            session['user_theme'] = after_user.theme
+            return redirect(url_for('index'))
+        else:
+            return render_template("change_theme.html", user=session['user'], theme_id=user.theme)
+    else:
+        return redirect(url_for('login'))
 
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
