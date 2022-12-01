@@ -12,6 +12,7 @@ class Project(db.Model):
         self.detail = detail
         self.company_name = company_name
 
+# Project Comment model - contains project comment information for associated project_id
 class Project_Comment(db.Model):
     id = db.Column('id', db.Integer, primary_key = True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
@@ -22,6 +23,7 @@ class Project_Comment(db.Model):
         self.project_id = project_id
         self.name = name
         self.comment = comment
+
 # Task model - contains task information for associated project_id
 class Task(db.Model):
     id = db.Column('id', db.Integer, primary_key = True)
@@ -77,6 +79,9 @@ def find_task_by_id(p_id, t_id):
 def find_comments_by_task(t_id):
     return db.session.query(Comment).filter_by(task_id = t_id).all()
 
+def find_comments_by_project(p_id):
+    return db.session.query(Project_Comment).filter_by(project_id = p_id).all()
+
 def find_comment_by_id(t_id, c_id):
     return db.session.query(Comment).filter_by(task_id = t_id, id = c_id).one()
 
@@ -106,7 +111,7 @@ def create_comment(task_id, name, comment):
     db.session.commit()
 
 def create_pcomment(project_id, name, comment):
-    comment = Comment(project_id, name, comment)
+    comment = Project_Comment(project_id, name, comment)
     db.session.add(comment)
     db.session.commit()
 

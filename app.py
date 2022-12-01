@@ -45,7 +45,8 @@ def get_project(project_id):
     if session.get('user'):
         my_project = find_project_by_id(project_id)
         tasks = find_tasks_by_project(project_id)
-        return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks, theme=session['user_theme'])
+        comments = find_comments_by_project(project_id)
+        return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks, theme=session['user_theme'], project_comments=comments)
     return redirect(url_for('login'))
 
 # ADD NEW PROJECT
@@ -190,16 +191,17 @@ def logout():
 def task_comment(t_id, project_id):
     if session.get('user'):
         comment_text = request.form['comment']
-        create_comment(int(t_id),session['user'], comment_text)
+        create_comment(int(t_id), session['user'], comment_text)
         return redirect(url_for('view_task', project_id=project_id, t_id=t_id))
     else:
         return redirect(url_for('login'))
+
 @app.route('/view_project/<project_id>/comment', methods=['POST'])
 def project_comment(project_id):
     if session.get('user'):
         comment_text = request.form['comment']
-        create_comment(int(project_id),session['user'], comment_text)
-        return redirect(url_for('view_project', project_id=project_id))
+        create_pcomment(int(project_id), session['user'], comment_text)
+        return redirect(url_for('get_project', project_id=project_id))
     else:
         return redirect(url_for('login'))
 
