@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import Length, DataRequired, EqualTo, Email
+from wtforms.validators import Length, DataRequired, EqualTo, Email, Regexp
 from wtforms import ValidationError
 from models import User
 from database import db
@@ -20,9 +20,9 @@ class RegisterForm(FlaskForm):
         DataRequired(message="Please enter a password."),
         EqualTo('confirmPassword', message='Passwords must match')
     ])
-
+    #TODO create regex phrase for checking password for reqs
     confirmPassword = PasswordField('Confirm Password', validators=[
-        Length(min=6, max=20)
+        Length(min=6, max=20), Regexp('^\w+$', message="Please enter a valid password")
     ])
     submit = SubmitField('Submit')
 

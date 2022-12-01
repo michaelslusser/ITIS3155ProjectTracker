@@ -215,7 +215,7 @@ def change_style(theme_id):
             session['user_theme'] = after_user.theme
             return redirect(url_for('index'))
         else:
-            return render_template("change_theme.html", user=session['user'], theme_id=session['user_theme'])
+            return render_template("change_theme.html", user=session['user'], theme_id = session['user_theme'])
     else:
         return redirect(url_for('login'))
 
