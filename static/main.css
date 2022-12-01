@@ -26,7 +26,7 @@ body {
     background:#5CDB95;
 }
 
-a {
+a, .nav-spacing {
     color: inherit;
     color: #0a2b40;
 }
