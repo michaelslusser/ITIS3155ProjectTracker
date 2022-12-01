@@ -187,11 +187,19 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/view_project/<project_id>/view_task/<t_id>/comment', methods=['POST'])
-def new_comment(t_id, project_id):
+def task_comment(t_id, project_id):
     if session.get('user'):
         comment_text = request.form['comment']
         create_comment(int(t_id),session['user'], comment_text)
         return redirect(url_for('view_task', project_id=project_id, t_id=t_id))
+    else:
+        return redirect(url_for('login'))
+@app.route('/view_project/<project_id>/comment', methods=['POST'])
+def project_comment(project_id):
+    if session.get('user'):
+        comment_text = request.form['comment']
+        create_comment(int(project_id),session['user'], comment_text)
+        return redirect(url_for('view_project', project_id=project_id))
     else:
         return redirect(url_for('login'))
 

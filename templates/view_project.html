@@ -73,7 +73,24 @@
             </div>
 
         </div>
-
+        <div class="commentsBox">
+            <h2>Comments</h2>
+            {% for comment in project_comments %}
+            <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
+            {% endfor %}
+        </div>
+        <form action="{{ url_for('project_comment', project_id=project.id) }}" method="post">
+            <div>
+                <h2 class="title">Add a comment</h2>
+                <textarea name="comment" rows="4" cols="0"></textarea>
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+        <form action="{{ url_for('get_project', project_id=project.id)}}" method = "get">
+            <div>
+                <input type="submit" value="Back">
+            </div>
+        </form>
     </body>
 
 </html>

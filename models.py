@@ -12,6 +12,16 @@ class Project(db.Model):
         self.detail = detail
         self.company_name = company_name
 
+class Project_Comment(db.Model):
+    id = db.Column('id', db.Integer, primary_key = True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    name = db.Column('name', db.String(100))
+    comment = db.Column('comment', db.String(300))
+
+    def __init__(self, project_id, name, comment):
+        self.project_id = project_id
+        self.name = name
+        self.comment = comment
 # Task model - contains task information for associated project_id
 class Task(db.Model):
     id = db.Column('id', db.Integer, primary_key = True)
@@ -92,6 +102,11 @@ def create_task(project_id, title, description):
 
 def create_comment(task_id, name, comment):
     comment = Comment(task_id, name, comment)
+    db.session.add(comment)
+    db.session.commit()
+
+def create_pcomment(project_id, name, comment):
+    comment = Comment(project_id, name, comment)
     db.session.add(comment)
     db.session.commit()
 
