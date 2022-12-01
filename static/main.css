@@ -44,6 +44,11 @@ nav{
 }
 .tableRow{
     border: 5px solid #1b6758;
+    width: 5em;
+}
+.tableRow2{
+    border: 5px solid #1b6758;
+    width: 15em;
 }
 .projectView{
     text-align: center;

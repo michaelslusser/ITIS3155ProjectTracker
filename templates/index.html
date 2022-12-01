@@ -21,20 +21,24 @@
             <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <a>||</a>
             <a href="{{ url_for('logout') }}">Logout</a>    
         </nav>
-        <h2>Here are your projects</h2>
-        <h2>Projects</h2>
+        <h2>Here are your available projects!</h2>
+        <p></p>
+        <p></p>
+        <p></p>
+        <!--<h2>Projects:</h2>-->
         <h3>
-            Title&emsp;&nbsp;Description
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Company
+            &nbsp;&nbsp;Title&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;Description
+            &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;Company
         </h3>
         <div class="box">
+            
             <table class="insideBox">
                 <!--Add start of for loop here-->
                 {% for project in user_projects %} 
                 <tr>
                     <!--Add in other <td> elements for whatever you need-->
                     <td class="tableRow"><a href="{{ url_for('get_project', project_id=project.id) }}">{{project.title}}</a></td>
-                    <td class="tableRow">{{project.detail}}</a></td>
+                    <td class="tableRow2">{{project.detail}}</a></td>
                     <td class="tableRow">{{project.company_name}}</a></td>
                     <!--EDIT NOT WORKING YET-->
                     <td>
