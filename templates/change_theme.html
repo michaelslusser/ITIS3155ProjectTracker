@@ -12,30 +12,32 @@
             <link rel="stylesheet" href="{{ url_for('static', filename='second.css')}}">
         {% endif %}
     </head>
-        <p></p>
 
     <body>
         <h1>Welcome {{user}}!</h1>
         <nav>
             <!--Add other pages-->
-            <a href="{{ url_for('index') }}">Home</a> <a>||</a>
-            <a href="{{ url_for('new_project') }}">Create Project</a> <a>||</a>
-            <a href="{{ url_for('change_style', theme_id=theme_id) }}" method = "get">Change Theme</a> <a>||</a>
+            <a href="{{ url_for('index') }}">Home</a> <span class="nav-spacing">||</span>
+            <a href="{{ url_for('new_project') }}">Create Project</a> <span class="nav-spacing">||</span>
+            <a href="{{ url_for('change_style', theme_id=theme_id) }}" method = "get">Change Theme</a> <span class="nav-spacing">||</span>
             <a href="{{ url_for('logout') }}">Logout</a>  
         </nav>
-        <p></p>
+        
+        <div class="box">
+            <h2>Click to change theme</h2>
+            <form action="{{url_for('change_style', theme_id=1)}}" method="post">
+                <input type="submit" value="Forest" name="styling 1">
+            </form>
+            
+            <form action="{{url_for('change_style', theme_id=2)}}" method="post">
+                <input type="submit" value="Deep Sea" name="styling 2">
+            </form>
+        </div>
+        <br><br>
         <div class="projectView">
             <form action="{{ url_for('index')}}" method = "get">
                 <input type="submit" value="Back">
             </form>
         </div>
-        <h2>Click to change theme</h2>
-        <form action="{{url_for('change_style', theme_id=1)}}" method="post">
-            <input type="submit" value="Forest" name="styling 1">
-        </form>
-        
-        <form action="{{url_for('change_style', theme_id=2)}}" method="post">
-            <input type="submit" value="Deep Sea" name="styling 2">
-        </form>
     </body>
 </html>

@@ -18,43 +18,47 @@
     <h1>Welcome {{user}}!</h1>
     <nav>
         <!--Add other pages-->
-        <a href="{{ url_for('index') }}">Home</a> <a>||</a>
-            <a href="{{ url_for('new_project') }}">Create Project</a> <a>||</a>
-            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <a>||</a>
+        <a href="{{ url_for('index') }}">Home</a> <span class="nav-spacing">||</span>
+            <a href="{{ url_for('new_project') }}">Create Project</a> <span class="nav-spacing">||</span>
+            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <span class="nav-spacing">||</span>
             <a href="{{ url_for('logout') }}">Logout</a>
     </nav>
     <p></p>
+    
+    <div class="box">
+            {% if project %}
+                <h2>Update Project</h2>
+                <form action="{{url_for('edit_project',project_id=project.id)}}" method="POST">
+            {% else %}
+                <h2>Create Project</h2>
+                <form action="{{url_for('new_project')}}" method="POST">
+            {% endif %}
+            <h3><p><label>Title </label></p></h3>
+            <p><input type="text" name="title" value="{% if project %}{{project.title}}{% endif %}" /></p>
+            <h3><p><label>Description </label></p></h3>
+            <p>
+                {% if project %}
+                    <textarea name="detail" rows="6" cols="0">{{project.detail}}</textarea>
+                {% else %}
+                    <textarea name="detail" rows="6" cols="0">Add a description of your project here</textarea>
+                {% endif %}
+            </p>
+            <h3><p><label>Company Name</label></p></h3>
+            <p><input type="text" name="company_name" value="{% if project %}{{project.company_name}}{% endif %}" /></p>
+            <p>
+                {% if project %}
+                    <input type="submit" value="Update Project" />
+                {% else %}
+                    <input type="submit" value="Add Project" />
+                {% endif %}
+            </p>
+        </form>
+    </div>
     <div class="projectView">
         <form action="{{ url_for('index')}}" method = "get">
             <input type="submit" value="Back Home">
         </form>
     </div>
-    <h2>Create/Update Project Below</h2>
-    {% if project %}
-        <form action="{{url_for('edit_project',project_id=project.id)}}" method="POST">
-    {% else %}
-        <form action="{{url_for('new_project')}}" method="POST">
-    {% endif %}
-        <h3><p><label>Title </label></p></h3>
-        <p><input type="text" name="title" value="{% if project %}{{project.title}}{% endif %}" /></p>
-        <h3><p><label>Description </label></p></h3>
-        <p>
-            {% if project %}
-                <textarea name="detail" rows="6" cols="0">{{project.detail}}</textarea>
-            {% else %}
-                <textarea name="detail" rows="6" cols="0">Add a description of your project here</textarea>
-            {% endif %}
-        </p>
-        <h3><p><label>Company Name</label></p></h3>
-        <p><input type="text" name="company_name" value="{% if project %}{{project.company_name}}{% endif %}" /></p>
-        <p>
-            {% if project %}
-                <input type="submit" value="Update Project" />
-            {% else %}
-                <input type="submit" value="Add Project" />
-            {% endif %}
-        </p>
-    </form>
 </body>
 
 </html>
