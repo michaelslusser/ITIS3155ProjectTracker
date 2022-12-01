@@ -44,7 +44,7 @@ def get_project(project_id):
     if session.get('user'):
         my_project = find_project_by_id(project_id)
         tasks = find_tasks_by_project(project_id)
-        return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks)
+        return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks, theme=session['user_theme'])
     return redirect(url_for('login'))
 
 # ADD NEW PROJECT
@@ -58,7 +58,7 @@ def new_project():
             create_project(title, text, company)
             return redirect(url_for('index'))
         else:
-            return render_template('new_project.html', user=session['user'])
+            return render_template('new_project.html', user=session['user'], theme=session['user_theme'])
     return redirect(url_for('login'))
 
 # EDIT PROJECT
@@ -73,7 +73,7 @@ def edit_project(project_id):
             return redirect(url_for('index'))
         else:
             my_project = find_project_by_id(project_id)
-            return render_template('new_project.html', project=my_project, user=session['user'])
+            return render_template('new_project.html', project=my_project, user=session['user'], theme=session['user_theme'])
     return redirect(url_for('login'))
 
 # DELETE PROJECT
@@ -96,7 +96,7 @@ def new_task(project_id):
             return redirect(url_for('get_project', project_id=my_project.id))
         else:
             my_project = find_project_by_id(project_id)
-            return render_template('new_task.html', user=session['user'], project=my_project)
+            return render_template('new_task.html', user=session['user'], project=my_project, theme=session['user_theme'])
     return redirect(url_for('login'))
 
 @app.route('/view_project/<project_id>/edit/<t_id>', methods=['GET','POST'])
@@ -112,7 +112,7 @@ def edit_task(project_id, t_id):
         else:
             my_project = find_project_by_id(project_id)
             my_task = find_task_by_id(project_id, t_id)
-            return render_template('new_task.html', user=session['user'], project=my_project, task=my_task)
+            return render_template('new_task.html', user=session['user'], project=my_project, task=my_task, theme=session['user_theme'])
     return redirect(url_for('login'))
 
 @app.route('/view_project/<project_id>/view_task/<t_id>', methods=['GET','POST'])
@@ -122,7 +122,7 @@ def view_task(project_id, t_id):
         my_task = find_task_by_id(project_id, t_id)
         comments = find_comments_by_task(t_id)
         #testing
-        return render_template('view_task.html', project=my_project, user=session['user'], task=my_task, task_comments=comments)
+        return render_template('view_task.html', project=my_project, user=session['user'], task=my_task, task_comments=comments, theme=session['user_theme'])
     return redirect(url_for('login'))
 
 @app.route('/view_project/<project_id>/delete/<t_id>', methods=['POST'])
@@ -142,9 +142,9 @@ def register():
         
         username = request.form['username']
         
-        new_user = User(username, request.form['email'], h_password, 2)
+        new_user = User(username, request.form['email'], h_password, 1)
         
-        create_user(username, request.form['email'], h_password, 2)
+        create_user(username, request.form['email'], h_password, 1)
 
         session['user'] = username
         session['user_id'] = new_user.id
