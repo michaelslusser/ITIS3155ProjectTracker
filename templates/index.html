@@ -49,6 +49,14 @@
                 {% endfor %}
                 <!--Add end of for loop here-->
             </table>
+            <div class="projectView">
+                <h5>
+                    <form action="{{ url_for('new_project') }}">
+                        <input type="submit" value="Create New Project">
+                </h5>
+
+                </form>
+            </div>
         </div>
     </body>
 </html>

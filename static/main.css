@@ -21,6 +21,9 @@ a {
     color: inherit;
     color: #0a2b40;
   }
+h5{
+    text-align: left;
+}
 
 nav{
     text-align: center;

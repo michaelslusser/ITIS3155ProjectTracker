@@ -26,9 +26,9 @@
         
         <div class="projectView">
             <h2>{{project.title}} || {{project.company_name}}</h2>
-            <form action="{{ url_for('new_task', project_id=project.id)}}">
+            <!--<form action="{{ url_for('new_task', project_id=project.id)}}">
                 <input type="submit" value="Create New Task">
-            </form>
+            </form>-->
         </div>
         <p></p>
         <div class="projectView">
@@ -57,7 +57,17 @@
                 <!--Add end of for loop here-->
                 {% endfor %}
             </table>
+            <div class="projectView">
+                <h5>
+                    <form action="{{ url_for('new_task', project_id=project.id)}}">
+                        <input type="submit" value="Create New Task">
+                </h5>
+
+                </form>
+            </div>
 
         </div>
+
     </body>
+
 </html>

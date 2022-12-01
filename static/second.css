@@ -20,7 +20,9 @@ a {
     color: inherit;
     color: #c1c7f2;
   }
-
+h5{
+    text-align: left;
+}
 
 nav{
     text-align: center;
