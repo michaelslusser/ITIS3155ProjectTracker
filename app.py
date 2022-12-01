@@ -29,6 +29,7 @@ with app.app_context():
 @app.route('/')
 @app.route('/index')
 @app.route('/projects') # can delete this later if needed
+@app.route('/notes/')
 def index():
     if session.get('user'):
         projects = find_projects()

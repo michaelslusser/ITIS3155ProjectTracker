@@ -6,27 +6,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Homepage</title>
         <!--styles-->
-        {% if theme_id == 1 %}
-            <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
-        {% else %}
+        {% if theme == 1 %}
             <link rel="stylesheet" href="{{ url_for('static', filename='second.css')}}">
+        {% else %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
         {% endif %}
     </head>
+        <p></p>
+
     <body>
+        <h1>Welcome {{user}}!</h1>
         <nav>
             <!--Add other pages-->
-            <a href="{{ url_for('index') }}">Home</a> ||
-            <a href="{{ url_for('new_project') }}">Create Project</a> ||
-            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> ||
+            <a href="{{ url_for('index') }}">Home</a> <a>||</a>
+            <a href="{{ url_for('new_project') }}">Create Project</a> <a>||</a>
+            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <a>||</a>
             <a href="{{ url_for('logout') }}">Logout</a>  
         </nav>
-        <h2>Here are your projects</h2>
+        <p></p>
+        <div class="projectView">
+            <form action="{{ url_for('index')}}" method = "get">
+                <input type="submit" value="Back">
+            </form>
+        </div>
         <h2>Click to change theme</h2>
         <form action="{{url_for('change_style', theme_id=1)}}" method="post">
-            <input type="submit" value="Style 1" name="styling 1">
+            <input type="submit" value="Forest" name="styling 1">
         </form>
+        
         <form action="{{url_for('change_style', theme_id=2)}}" method="post">
-            <input type="submit" value="Style 2" name="styling 2">
+            <input type="submit" value="Deep Sea" name="styling 2">
         </form>
     </body>
 </html>

@@ -1,33 +1,46 @@
 /* webpage styling */
 h1{
-    color:black;
+    color:#05386B;
     text-align: center;
 }
 h2{
-    color: #112A46;
+    color: #05386B;
+}
+h3{
+    color:#0e2c4b;
+    font-size: 16px;
+}
+h4{
+    color:#0a2b40;
+    font-size: 18px;
 }
 body{
-    background:#ACC8E5;
+    background:#5CDB95;
 }
+a {
+    color: inherit;
+    color: #0a2b40;
+  }
 
 nav{
     text-align: center;
 }
 
 .box{
+    color: #1b6758;
     width: 100%;
     height: 500px;
     width: 25em;
     text-align: center;
 }
 .insideBox{
-    background-color: white;
+    background-color: #edf5e1;
     text-align: left;
     border: 5px solid;
     margin-bottom: 20px;
 }
 .tableRow{
-    border: 5px solid black;
+    border: 5px solid #1b6758;
 }
 .projectView{
     text-align: center;

@@ -16,9 +16,9 @@
         <h1>Welcome {{user}}!</h1>
         <nav>
             <!--Add other pages-->
-            <a href="{{ url_for('index') }}">Home</a> ||
-            <a href="{{ url_for('new_project') }}">Create Project</a> ||
-            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> ||
+            <a href="{{ url_for('index') }}">Home</a> <a>||</a>
+            <a href="{{ url_for('new_project') }}">Create Project</a> <a>||</a>
+            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <a>||</a>
             <a href="{{ url_for('logout') }}">Logout</a>
             
         </nav>
@@ -32,7 +32,7 @@
         <h2>Comments</h2>
         <div class="commentsBox">
             {% for comment in task_comments %}
-            <ul>{{ comment.name }}: {{ comment.comment }}</ul>
+            <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
             {% endfor %}
         </div>
         <form action="{{ url_for('new_comment', project_id=project.id, t_id=task.id) }}" method="post">

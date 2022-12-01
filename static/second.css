@@ -1,33 +1,47 @@
 /* webpage styling */
 h1{
-    color:black;
+    color:#2e9cca;
     text-align: center;
 }
 h2{
-    color: brown;
+    color: #2e9cca;
+}
+h3{
+    color: #2e9cca
+}
+h4{
+    color:#6eb0dc;
+    font-size: 18px;
 }
 body{
-    background:yellow;
+    background:#25274d;
 }
+a {
+    color: inherit;
+    color: #c1c7f2;
+  }
+
 
 nav{
     text-align: center;
 }
 
 .box{
+    color:#c1c7f2;
     width: 100%;
     height: 500px;
     width: 25em;
     text-align: center;
+    text-decoration:none;
 }
 .insideBox{
-    background-color: white;
+    background-color: #29648a;
     text-align: left;
     border: 5px solid;
     margin-bottom: 20px;
 }
 .tableRow{
-    border: 5px solid black;
+    border: 5px solid #0b3b67;
 }
 .projectView{
     text-align: center;
