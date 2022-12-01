@@ -149,7 +149,7 @@ def register():
 
         session['user'] = username
         session['user_id'] = new_user.id
-        session['user_theme'] = 2
+        session['user_theme'] = 1
         
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
@@ -205,7 +205,7 @@ def change_style(theme_id):
             session['user_theme'] = after_user.theme
             return redirect(url_for('index'))
         else:
-            return render_template("change_theme.html", user=session['user'], theme_id=user.theme)
+            return render_template("change_theme.html", user=session['user'], theme_id=session['user_theme'])
     else:
         return redirect(url_for('login'))
 
