@@ -1,61 +1,107 @@
 /* webpage styling */
-h1{
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1 {
     color:#05386B;
     text-align: center;
 }
-h2{
+
+h2 {
     color: #05386B;
 }
-h3{
+
+h3 {
     color:#0e2c4b;
     font-size: 16px;
 }
-h4{
+
+h4 {
     color:#0a2b40;
     font-size: 18px;
 }
-body{
+
+body {
     background:#5CDB95;
 }
+
 a {
     color: inherit;
     color: #0a2b40;
-  }
-h5{
+}
+
+h5 {
     text-align: left;
 }
 
-nav{
+nav {
     text-align: center;
 }
 
-.box{
+.box {
     color: #1b6758;
-    width: 100%;
-    height: 500px;
-    width: 25em;
+    width: 40%;
     text-align: center;
+    margin: 0px auto;
 }
-.insideBox{
+
+.table-header {
+    text-align: center;
+    margin: 0px auto;
+}
+
+.insideBox {
     background-color: #edf5e1;
     text-align: left;
     border: 5px solid;
     margin-bottom: 20px;
+    width: 100%;
 }
-.tableRow{
+
+.insideBox h3 {
+    text-align: center;
+    margin: 3px; 
+}
+
+.tableRow {
     border: 5px solid #1b6758;
     width: 5em;
+    text-align: center;
 }
-.tableRow2{
+
+.tableRow2 {
     border: 5px solid #1b6758;
     width: 15em;
 }
-.projectView{
+
+.tableRow3 {
+    border: 5px solid #1b6758;
+    width: 25em;
+}
+
+.insideBox input[type=submit] {
+    margin: 2px;
+    width: 100%;
+}
+
+.projectView {
     text-align: center;
 }
-.commentsBox{
+
+.commentsBox {
     border: 2px solid gray;
     padding-bottom: 20px;
     width: 200px;
     padding-right: 20px;
+    margin: 0px auto;
+}
+
+.commentsBox h2 {
+    text-align: center;
+}
+
+form div {
+    margin: 2px auto;
+    width: 200px;
 }

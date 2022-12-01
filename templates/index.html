@@ -16,24 +16,26 @@
         <h1>Welcome {{user}}!</h1>
         <nav>
             <!--Add other pages-->
-            <a href="{{ url_for('index') }}">Home</a> <a>||</a>
-            <a href="{{ url_for('new_project') }}">Create Project</a> <a>||</a>
-            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <a>||</a>
+            <a href="{{ url_for('index') }}">Home</a> ||
+            <a href="{{ url_for('new_project') }}">Create Project</a> ||
+            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> ||
             <a href="{{ url_for('logout') }}">Logout</a>    
         </nav>
-        <h2>Here are your available projects!</h2>
-        <p></p>
-        <p></p>
-        <p></p>
-        <!--<h2>Projects:</h2>-->
-        <h3>
-            &nbsp;&nbsp;Title&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;Description
-            &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;Company
-        </h3>
+        
+        <div class="table-header">
+            <h2>Here are your available projects!</h2>
+            
+        </div>
+
         <div class="box">
             
             <table class="insideBox">
                 <!--Add start of for loop here-->
+                <tr>
+                    <td><h3>Title</h3></td>
+                    <td><h3>Description</h3></td>
+                    <td><h3>Company</h3></td>
+                </tr>
                 {% for project in user_projects %} 
                 <tr>
                     <!--Add in other <td> elements for whatever you need-->
@@ -54,11 +56,8 @@
                 <!--Add end of for loop here-->
             </table>
             <div class="projectView">
-                <h5>
-                    <form action="{{ url_for('new_project') }}">
-                        <input type="submit" value="Create New Project">
-                </h5>
-
+                <form action="{{ url_for('new_project') }}">
+                    <input type="submit" value="Create New Project">
                 </form>
             </div>
         </div>
