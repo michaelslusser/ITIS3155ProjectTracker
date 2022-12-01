@@ -144,10 +144,10 @@ def register():
         
         username = request.form['username']
         
-        new_user = User(username, request.form['email'], h_password, 1)
-        
         create_user(username, request.form['email'], h_password, 1)
 
+        new_user = db.session.query(User).filter_by(email=request.form['email']).one()
+        
         session['user'] = username
         session['user_id'] = new_user.id
         session['user_theme'] = 1
