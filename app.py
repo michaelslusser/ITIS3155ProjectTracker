@@ -28,16 +28,13 @@ with app.app_context():
 # GET / - show the user the landing page
 @app.route('/')
 @app.route('/index')
-@app.route('/projects') # can delete this later if needed
+@app.route('/projects')
 @app.route('/notes/')
 def index():
     if session.get('user'):
         projects = find_projects()
         return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'])
     return redirect(url_for('login'))
-    #a_user = db.session.query(User).filter_by(email='ajoshy@uncc.edu').one()
-    #projects = find_projects()
-    #return render_template('index.html',user=a_user,user_projects=projects)
 
 # VIEW PROJECT
 @app.route('/view_project/<project_id>')
@@ -86,7 +83,7 @@ def delete_project(project_id):
         return redirect(url_for('index'))
     return redirect(url_for('login'))
 
-#Placeholder code for creating new task
+# CREATE NEW TASK
 @app.route('/view_project/<project_id>/new_task', methods=['GET','POST'])
 def new_task(project_id):
     if session.get('user'):
@@ -101,6 +98,7 @@ def new_task(project_id):
             return render_template('new_task.html', user=session['user'], project=my_project, theme=session['user_theme'])
     return redirect(url_for('login'))
 
+# EDIT TASK
 @app.route('/view_project/<project_id>/edit/<t_id>', methods=['GET','POST'])
 def edit_task(project_id, t_id):
     if session.get('user'):
@@ -117,6 +115,7 @@ def edit_task(project_id, t_id):
             return render_template('new_task.html', user=session['user'], project=my_project, task=my_task, theme=session['user_theme'])
     return redirect(url_for('login'))
 
+# VIEW TASK
 @app.route('/view_project/<project_id>/view_task/<t_id>', methods=['GET','POST'])
 def view_task(project_id, t_id):
     if session.get('user'):
@@ -127,6 +126,7 @@ def view_task(project_id, t_id):
         return render_template('view_task.html', project=my_project, user=session['user'], task=my_task, task_comments=comments, theme=session['user_theme'])
     return redirect(url_for('login'))
 
+# DELETE TASK
 @app.route('/view_project/<project_id>/delete/<t_id>', methods=['POST'])
 def delete_task(project_id, t_id):
     if session.get('user'):
@@ -136,6 +136,7 @@ def delete_task(project_id, t_id):
     else:
         return redirect(url_for('login'))
 
+# REGISTER
 @app.route('/register', methods = ['POST', 'GET'])
 def register():
     form = RegisterForm()
@@ -155,6 +156,7 @@ def register():
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
 
+# LOGIN
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     login_form = LoginForm()
@@ -179,6 +181,7 @@ def login():
         # form did not validate or GET request
         return render_template("login.html", form=login_form)
 
+# LOGOUT
 @app.route('/logout')
 def logout():
     # check if a user is saved in session
@@ -187,6 +190,7 @@ def logout():
 
     return redirect(url_for('index'))
 
+# COMMENT ON TASK
 @app.route('/view_project/<project_id>/view_task/<t_id>/comment', methods=['POST'])
 def task_comment(t_id, project_id):
     if session.get('user'):
@@ -196,6 +200,7 @@ def task_comment(t_id, project_id):
     else:
         return redirect(url_for('login'))
 
+# COMMENT ON PROJECT
 @app.route('/view_project/<project_id>/comment', methods=['POST'])
 def project_comment(project_id):
     if session.get('user'):
@@ -205,6 +210,7 @@ def project_comment(project_id):
     else:
         return redirect(url_for('login'))
 
+# CHANGE THEME
 @app.route('/style/<theme_id>', methods=['GET','POST'])
 def change_style(theme_id):
     if session.get('user'):
@@ -218,7 +224,7 @@ def change_style(theme_id):
             return render_template("change_theme.html", user=session['user'], theme_id = session['user_theme'])
     else:
         return redirect(url_for('login'))
-# in progress not working
+# in progress not working (delete comment)
 @app.route('/view_project/<project_id>/deletepcomment', methods=['POST'])
 def delete_pcomment(project_id, t_id):
     if session.get('user'):
