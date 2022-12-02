@@ -218,6 +218,14 @@ def change_style(theme_id):
             return render_template("change_theme.html", user=session['user'], theme_id = session['user_theme'])
     else:
         return redirect(url_for('login'))
-
+# in progress not working
+@app.route('/view_project/<project_id>/deletepcomment', methods=['POST'])
+def delete_pcomment(project_id, t_id):
+    if session.get('user'):
+        #comment_text = request.form['comment']
+        delete_pcomment(int(project_id), int(t_id), session['user'])
+        return redirect(url_for('get_project', project_id=project_id, t_id = t_id))
+    else:
+        return redirect(url_for('login'))
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)

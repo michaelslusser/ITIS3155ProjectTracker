@@ -27,13 +27,20 @@
         <div class="projectView">
             <h2>{{task.title}}</h2>
             <h3>{{task.description}}</h3>
+            <form action="{{ url_for('get_project', project_id=project.id)}}" method = "get">
+                <div>
+                    <input type="submit" value="Back">
+                </div>
+            </form>
             <br>
         </div>
+        
         
         <div class="commentsBox">
             <h2>Comments</h2>
             {% for comment in task_comments %}
             <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
+            
             {% endfor %}
         </div>
         <form action="{{ url_for('task_comment', project_id=project.id, t_id=task.id) }}" method="post">
@@ -43,10 +50,6 @@
                 <input type="submit" value="Submit">
             </div>
         </form>
-        <form action="{{ url_for('get_project', project_id=project.id)}}" method = "get">
-            <div>
-                <input type="submit" value="Back">
-            </div>
-        </form>
+
     </body>
 </html>

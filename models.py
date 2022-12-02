@@ -82,8 +82,8 @@ def find_comments_by_task(t_id):
 def find_comments_by_project(p_id):
     return db.session.query(Project_Comment).filter_by(project_id = p_id).all()
 
-def find_comment_by_id(t_id, c_id):
-    return db.session.query(Comment).filter_by(task_id = t_id, id = c_id).one()
+def find_pcomment_by_id(project_id, c_id):
+    return db.session.query(Comment).filter_by(project_id = project_id, id = c_id).one()
 
 def find_users():
     return db.session.query(User).all()
@@ -174,9 +174,15 @@ def remove_task(t_id, project_id):
     db.session.delete(task)
     db.session.commit()
 
-def remove_comment(c_id, task_id):
+#def remove_tcomment(c_id, project_id, task_id):
     # get comment from db and delete
-    comment = find_comment_by_id(task_id, c_id)
+   # comment = find_pcomment_by_id(task_id, c_id)
+   # db.session.delete(comment)
+   # db.session.commit()
+
+def remove_pcomment(project_id, c_id):
+    # get comment from db and delete
+    comment = find_pcomment_by_id(project_id, c_id)
     db.session.delete(comment)
     db.session.commit()
 

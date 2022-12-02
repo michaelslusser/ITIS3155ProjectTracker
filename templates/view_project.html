@@ -80,7 +80,11 @@
             <h2>Comments</h2>
             {% for comment in project_comments %}
             <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
+            <form action="{{url_for('delete_pcomment',project_id=project.id)}}" method = "post">
+                <input type="submit" value="Delete">
+            </form>
             {% endfor %}
+            
         </div>
         <form action="{{ url_for('project_comment', project_id=project.id) }}" method="post">
             <div>
@@ -88,12 +92,7 @@
                 <textarea name="comment" rows="4" cols="0"></textarea>
                 <input type="submit" value="Submit">
             </div>
-        </form>
-        <form action="{{ url_for('index')}}" method = "get">
-            <div>
-                <input type="submit" value="Back">
-            </div>
-        </form>
+
     </body>
 
 </html>
