@@ -62,7 +62,7 @@ class User(db.Model):
         self.password = password
         self.theme = theme
 
-# functions to interact with models
+# functions to interact with models 
 # read operations
 def find_projects():
     return db.session.query(Project).all()

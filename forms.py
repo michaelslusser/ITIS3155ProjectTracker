@@ -24,7 +24,7 @@ class RegisterForm(FlaskForm):
     confirmPassword = PasswordField('Confirm Password', validators=[
         Length(min=6, max=20), Regexp('^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%#?&])[A-Za-z\d@$!%*#?&]{6,}$', message="Please enter a valid password with a length of 6-20 characters, uppercase letters, numbers, and symbols (@$!%*#?&)")
     ])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Submit') 
 
     def validate_email(self, field):
         if db.session.query(User).filter_by(email=field.data).count() != 0:
