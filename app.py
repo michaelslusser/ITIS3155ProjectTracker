@@ -35,6 +35,7 @@ def index():
         return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'])
     return redirect(url_for('login'))
 
+# PROJECT SORT
 @app.route('/index/sort')
 def sort():
     if session.get('user'):
@@ -53,6 +54,7 @@ def get_project(project_id):
         return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks, theme=session['user_theme'], project_comments=comments)
     return redirect(url_for('login'))
 
+# TASK SORT
 @app.route('/view_project/<project_id>/sort')
 def tsort(project_id):
     if session.get('user'):
@@ -170,7 +172,10 @@ def register():
         session['user_theme'] = 1
         
         return redirect(url_for('index'))
-    return render_template('register.html', form=form)
+    elif session.get('user'):
+        return redirect(url_for('index')) 
+    else:
+        return render_template('register.html', form=form)
 
 # LOGIN
 @app.route('/login', methods=['POST', 'GET'])
@@ -193,6 +198,8 @@ def login():
         # set error message to alert user
         login_form.password.errors = ["Incorrect username or password."]
         return render_template("login.html", form=login_form)
+    elif session.get('user'):
+        return redirect(url_for('index')) 
     else:
         # form did not validate or GET request
         return render_template("login.html", form=login_form)
