@@ -54,6 +54,16 @@ def get_project(project_id):
         return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks, theme=session['user_theme'], project_comments=comments)
     return redirect(url_for('login'))
 
+# HIDE PROJECT COMMENTS
+@app.route('/view_project/<project_id>/hidec')
+def get_projecthidec(project_id):
+    if session.get('user'):
+        my_project = find_project_by_id(project_id)
+        tasks = find_tasks_by_project(project_id)
+        comments = find_comments_by_project(project_id)
+        return render_template('view_project_hidec.html', project=my_project, user=session['user'], proj_tasks=tasks, theme=session['user_theme'], project_comments=comments)
+    return redirect(url_for('login'))
+
 # TASK SORT
 @app.route('/view_project/<project_id>/sort')
 def tsort(project_id):
@@ -142,6 +152,17 @@ def view_task(project_id, t_id):
         comments = find_comments_by_task(t_id)
         #testing
         return render_template('view_task.html', project=my_project, user=session['user'], task=my_task, task_comments=comments, theme=session['user_theme'])
+    return redirect(url_for('login'))
+
+# HIDE TASK COMMENTS
+@app.route('/view_project/<project_id>/view_task/<t_id>/hidec', methods=['GET','POST'])
+def view_taskhidec(project_id, t_id):
+    if session.get('user'):
+        my_project = find_project_by_id(project_id)
+        my_task = find_task_by_id(project_id, t_id)
+        comments = find_comments_by_task(t_id)
+        #testing
+        return render_template('view_task_hidec.html', project=my_project, user=session['user'], task=my_task, task_comments=comments, theme=session['user_theme'])
     return redirect(url_for('login'))
 
 # DELETE TASK

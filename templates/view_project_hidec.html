@@ -80,16 +80,15 @@
         <div class='parent'>
             <div class='child'>        <div class="commentsBox">
                 <h2>Comments</h2>
-                {% for comment in project_comments %}
+                <!--{% for comment in project_comments %}
                 <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
-                <!--<form action="{{url_for('delete_pcomment',project_id=project.id)}}" method = "post">
+                <form action="{{url_for('delete_pcomment',project_id=project.id)}}" method = "post">
                     <input type="submit" value="Delete">
                 </form>-->
                 {% endfor %}
-
-            </div>             
-            <form action="{{ url_for('get_projecthidec', project_id=project.id)}}" method = "get">
-                <input type="submit" value="Hide Comments">
+                
+            </div><form action="{{ url_for('get_project', project_id=project.id)}}" method = "get">
+                <input type="submit" value="Show Comments">
             </form></div>
             <div class='child2'>        <form action="{{ url_for('project_comment', project_id=project.id) }}" method="post">
                 <div>

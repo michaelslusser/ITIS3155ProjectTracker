@@ -38,13 +38,15 @@
         <div class='parent'>
             <div class='child'>        <div class="commentsBox">
                 <h2>Comments</h2>
-                {% for comment in task_comments %}
+               <!-- {% for comment in task_comments %}
                 <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
                 
-                {% endfor %}
-            </div><form action="{{ url_for('view_taskhidec', project_id=project.id, t_id=task.id)}}" method = "get">
-                <input type="submit" value="Hide Comments">
-            </form></div>
+                {% endfor %}-->
+            </div>
+            <form action="{{ url_for('view_task', project_id=project.id, t_id=task.id)}}" method = "get">
+                <input type="submit" value="Show Comments">
+            </form>
+        </div>
             <div class='child2'>        <form action="{{ url_for('task_comment', project_id=project.id, t_id=task.id) }}" method="post">
                 <div>
                     <h2 class="title">Add a comment</h2>
