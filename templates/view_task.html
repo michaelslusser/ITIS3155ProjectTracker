@@ -35,21 +35,24 @@
             <br>
         </div>
         
-        
-        <div class="commentsBox">
-            <h2>Comments</h2>
-            {% for comment in task_comments %}
-            <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
-            
-            {% endfor %}
-        </div>
-        <form action="{{ url_for('task_comment', project_id=project.id, t_id=task.id) }}" method="post">
-            <div>
-                <h2 class="title">Add a comment</h2>
-                <textarea name="comment" rows="4" cols="0"></textarea>
-                <input type="submit" value="Submit">
-            </div>
-        </form>
+        <div class='parent'>
+            <div class='child'>        <div class="commentsBox">
+                <h2>Comments</h2>
+                {% for comment in task_comments %}
+                <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
+                
+                {% endfor %}
+            </div></div>
+            <div class='child2'>        <form action="{{ url_for('task_comment', project_id=project.id, t_id=task.id) }}" method="post">
+                <div>
+                    <h2 class="title">Add a comment</h2>
+                    <textarea name="comment" rows="4" cols="0"></textarea>
+                    <input type="submit" value="Submit">
+                </div>
+            </form></div>
+          </div>
+
+
 
     </body>
 </html>

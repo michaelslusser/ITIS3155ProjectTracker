@@ -73,25 +73,28 @@
                     <input type="submit" value="Back Home">
                 </form>
             </div>
-
-        </div><br>
-
-        <div class="commentsBox">
-            <h2>Comments</h2>
-            {% for comment in project_comments %}
-            <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
-            <!--<form action="{{url_for('delete_pcomment',project_id=project.id)}}" method = "post">
-                <input type="submit" value="Delete">
-            </form>-->
-            {% endfor %}
-            
+            <p1></p1>
         </div>
-        <form action="{{ url_for('project_comment', project_id=project.id) }}" method="post">
-            <div>
-                <h2 class="title">Add a comment</h2>
-                <textarea name="comment" rows="4" cols="0"></textarea>
-                <input type="submit" value="Submit">
-            </div>
+        <div class='parent'>
+            <div class='child'>        <div class="commentsBox">
+                <h2>Comments</h2>
+                {% for comment in project_comments %}
+                <h4><ul>{{ comment.name }}: {{ comment.comment }}</ul></h4>
+                <!--<form action="{{url_for('delete_pcomment',project_id=project.id)}}" method = "post">
+                    <input type="submit" value="Delete">
+                </form>-->
+                {% endfor %}
+                
+            </div></div>
+            <div class='child2'>        <form action="{{ url_for('project_comment', project_id=project.id) }}" method="post">
+                <div>
+                    <h2 class="title">Add a comment</h2>
+                    <textarea name="comment" rows="4" cols="0"></textarea>
+                    <input type="submit" value="Submit">
+                </div></div>
+          </div>
+
+
 
     </body>
 
