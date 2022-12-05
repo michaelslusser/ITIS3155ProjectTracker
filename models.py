@@ -79,6 +79,9 @@ def find_task_by_id(p_id, t_id):
 def find_comments_by_task(t_id):
     return db.session.query(Comment).filter_by(task_id = t_id).all()
 
+def find_comment_by_id(c_id):
+    return db.session.query(Comment).filter_by(id = c_id).one()
+
 def find_comments_by_project(p_id):
     return db.session.query(Project_Comment).filter_by(project_id = p_id).all()
 
