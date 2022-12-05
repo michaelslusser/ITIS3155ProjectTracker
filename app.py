@@ -29,10 +29,17 @@ with app.app_context():
 @app.route('/')
 @app.route('/index')
 @app.route('/projects')
-@app.route('/notes/')
 def index():
     if session.get('user'):
         projects = find_projects()
+        return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'])
+    return redirect(url_for('login'))
+
+@app.route('/index/sort')
+def sort():
+    if session.get('user'):
+        projects = find_projects()
+        projects.sort(key = lambda project:project.title.lower())
         return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'])
     return redirect(url_for('login'))
 
