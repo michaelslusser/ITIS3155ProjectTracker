@@ -68,12 +68,14 @@
             <div class="projectView">
                 <form action="{{ url_for('new_task', project_id=project.id)}}">
                         <input type="submit" value="Create New Task">
+                </form>
+                <form action="{{url_for('tsort', project_id=project.id)}}">
+                    <input type="submit" value="Sort Alphabetically">
                 </form><br>
                 <form action="{{ url_for('index')}}" method = "get">
                     <input type="submit" value="Back Home">
                 </form>
             </div>
-            <p1></p1>
         </div>
         <div class='parent'>
             <div class='child'>        <div class="commentsBox">

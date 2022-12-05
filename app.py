@@ -53,6 +53,15 @@ def get_project(project_id):
         return render_template('view_project.html', project=my_project, user=session['user'], proj_tasks=tasks, theme=session['user_theme'], project_comments=comments)
     return redirect(url_for('login'))
 
+@app.route('/view_project/<project_id>/sort')
+def tsort(project_id):
+    if session.get('user'):
+        my_project = find_project_by_id(project_id)
+        tasks = find_tasks_by_project(project_id)
+        tasks.sort(key = lambda task:task.title.lower())
+        return render_template("view_project.html", project=my_project, user=session['user'], proj_tasks = tasks, theme=session['user_theme'])
+    return redirect(url_for('login'))
+
 # ADD NEW PROJECT
 @app.route('/new_project', methods=['GET','POST'])
 def new_project():
