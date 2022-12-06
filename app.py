@@ -10,9 +10,10 @@ from models import *
 from forms import *
 import bcrypt
 from flask import session
-
+PROJECT_IMAGES = os.path.join('static', 'project_images')
 app = Flask(__name__)
 app.static_folder = './static'
+app.config['UPLOAD_FOLDER'] = PROJECT_IMAGES
 app.template_folder = './templates'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project_app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
@@ -32,7 +33,9 @@ with app.app_context():
 def index():
     if session.get('user'):
         projects = find_projects()
-        return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'])
+        image1 = os.path.join(app.config['UPLOAD_FOLDER'], 'flow.jpg')
+        image2 = os.path.join(app.config['UPLOAD_FOLDER'], 'testing.jpg')
+        return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'], project_image1=image1, project_image2=image2)
     return redirect(url_for('login'))
 
 # PROJECT SORT
@@ -82,7 +85,12 @@ def new_project():
             title = request.form['title']
             text = request.form['detail']
             company = request.form['company_name']
-            create_project(title, text, company)
+            if request.form['image'] == "Image 1":
+                imagename = 'flow.jpg'
+                create_project(title, text, company, imagename)
+            else:
+                imagename = 'testing.jpg'
+                create_project(title, text, company, imagename)
             return redirect(url_for('index'))
         else:
             return render_template('new_project.html', user=session['user'], theme=session['user_theme'])
@@ -96,7 +104,12 @@ def edit_project(project_id):
             title = request.form['title']
             detail = request.form['detail']
             company_name = request.form['company_name']
-            update_project(project_id, title, detail, company_name)
+            if request.form['image'] == "Image 1":
+                imagename = 'flow.jpg'
+                update_project(project_id, title, detail, company_name, imagename)
+            else:
+                imagename = 'testing.jpg'
+                update_project(project_id, title, detail, company_name, imagename)
             return redirect(url_for('index'))
         else:
             my_project = find_project_by_id(project_id)

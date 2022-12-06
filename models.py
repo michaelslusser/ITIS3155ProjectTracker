@@ -6,11 +6,13 @@ class Project(db.Model):
     title = db.Column('title', db.String(200))
     detail = db.Column('detail', db.String(1000))
     company_name = db.Column('company_name', db.String(100))
+    img_name = db.Column('img', db.String(100))
 
-    def __init__(self, title, detail, company_name):
+    def __init__(self, title, detail, company_name, img):
         self.title = title
         self.detail = detail
         self.company_name = company_name
+        self.img_name = img
 
 # Project Comment model - contains project comment information for associated project_id
 class Project_Comment(db.Model):
@@ -98,8 +100,8 @@ def find_users_by_email(u_email):
     return db.session.query(User).filter_by(email = u_email).all()
 
 # create operations
-def create_project(title, detail, company_name):
-    project = Project(title, detail, company_name)
+def create_project(title, detail, company_name, img):
+    project = Project(title, detail, company_name, img)
     db.session.add(project)
     db.session.commit()
 
@@ -124,12 +126,13 @@ def create_user(username, email, password, theme):
     db.session.commit()
 
 # update operations
-def update_project(p_id, title, detail, company):
+def update_project(p_id, title, detail, company, img):
     # get project from db and update values
     project = find_project_by_id(p_id)
     project.title = title
     project.detail = detail
     project.company_name = company
+    project.img_name = img
     # push changes
     db.session.add(project)
     db.session.commit()
