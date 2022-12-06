@@ -22,7 +22,10 @@ class RegisterForm(FlaskForm):
     ])
     #TODO create regex phrase for checking password for reqs
     confirmPassword = PasswordField('Confirm Password', validators=[
-        Length(min=6, max=20), Regexp('^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%#?&])[A-Za-z\d@$!%*#?&]{6,}$', message="Please enter a valid password with a length of 6-20 characters, uppercase letters, numbers, and symbols (@$!%*#?&)")
+        Length(min=6, max=20),
+        Regexp('^(?=.*[A-Za-z])(?=.*\d)(?=.*[~`! @#$%^&*()_\-+={[}]|\:;"\'<,>.?/])[A-Za-z\d~`! @#$%^&*()_\-+={[}]|\:;"\'<,>.?/]{6,}$',
+            message="Please enter a valid password with a length of 6-20 characters, uppercase letters, numbers, and symbols (~`! @#$%^&*()_-+={[}]|\:;\"'<,>.?/)"
+            )
     ])
     submit = SubmitField('Submit') 
 
