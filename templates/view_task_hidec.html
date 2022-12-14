@@ -1,58 +1,67 @@
 <!-- landing page for app -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>View Project</title>
-        <!--styles-->
-        {% if theme == 1 %}
-            <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
-        {% elif theme == 3 %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='third.css')}}">
-        {% else %}
-            <link rel="stylesheet" href="{{ url_for('static', filename='second.css')}}">
-        {% endif %}
-    </head>
-    <body>
-        <h1>Welcome {{user}}!</h1>
-        <nav>
-            <!--Add other pages-->
-            <a href="{{ url_for('index') }}">Home</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('new_project') }}">Create Project</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('logout') }}">Logout</a>
-            
-        </nav>
-        <div class="projectView">
-            <h2>{{task.title}}</h2>
-            <h3>{{task.description}}</h3>
-            <form action="{{ url_for('get_project', project_id=project.id)}}" method = "get">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>View Project</title>
+    <!--styles-->
+    {% if theme == 1 %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+    {% elif theme == 3 %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='third.css')}}">
+    {% else %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='second.css')}}">
+    {% endif %}
+</head>
+
+<body>
+    <h1>Welcome {{user}}!</h1>
+    <nav>
+        <!--Add other pages-->
+        <a href="{{ url_for('index') }}">Home</a> <span class="nav-spacing">||</span>
+        <a href="{{ url_for('new_project') }}">Create Project</a> <span class="nav-spacing">||</span>
+        <a href="{{ url_for('change_style', theme_id=theme) }}" method="get">Change Theme</a> <span
+            class="nav-spacing">||</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+    </nav>
+    <div class="projectView">
+        <h2>{{task.title}}</h2>
+        <h3>{{task.description}}</h3>
+        <a>========================================================</a><br><br>
+        <form action="{{ url_for('get_project', project_id=project.id)}}" method="get">
+            <div>
+                <input type="submit" value="Back">
+            </div>
+        </form>
+
+    </div>
+
+    <div class='parent'>
+        <div class='child'>
+            <h2>
+                <nav>Comments</nav>
+            </h2>
+            <div class="commentsBox">
+
+            </div>
+            <form action="{{ url_for('view_task', project_id=project.id, t_id=task.id)}}" method="get">
+                <br>
+                <nav><input type="submit" value="Show Comments"></nav>
+            </form>
+        </div>
+        <div class='child2'>
+            <form action="{{ url_for('task_comment', project_id=project.id, t_id=task.id) }}" method="post">
                 <div>
-                    <input type="submit" value="Back">
+                    <h2 class="title">Add a comment</h2>
+                    <textarea name="comment" rows="4" cols="0"></textarea><br><br>
+                    <input type="submit" value="Submit">
                 </div>
             </form>
-            <br>
         </div>
-        
-        <div class='parent'>
-            <div class='child'>        
-                <div class="commentsBox">
-                    <h2>Comments</h2>
-                </div>
-                <form action="{{ url_for('view_task', project_id=project.id, t_id=task.id)}}" method = "get">
-                    <input type="submit" value="Show Comments">
-                </form>
-            </div>
-            <div class='child2'>        
-                <form action="{{ url_for('task_comment', project_id=project.id, t_id=task.id) }}" method="post">
-                    <div>
-                        <h2 class="title">Add a comment</h2>
-                        <textarea name="comment" rows="4" cols="0"></textarea>
-                        <input type="submit" value="Submit">
-                    </div>
-                </form>
-            </div>
-          </div>
-    </body>
+    </div>
+</body>
+
 </html>

@@ -1,80 +1,94 @@
 <!-- landing page for app -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Homepage</title>
-        <!--styles-->
-        {% if theme == 1 %}
-            <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
-        {% elif theme == 3 %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='third.css')}}">
-        {% else %}
-            <link rel="stylesheet" href="{{ url_for('static', filename='second.css')}}">
-        {% endif %}
-    </head>
-    <body>
-        <h1>Welcome {{user}}!</h1>
-        <nav>
-            <!--Add other pages-->
-            <a href="{{ url_for('index') }}">Home</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('new_project') }}">Create Project</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('logout') }}">Logout</a>    
-        </nav>
-        
-        <div class="table-header">
-            <h2>Here are your available projects!</h2>
-            
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Homepage</title>
+    <!--styles-->
+    {% if theme == 1 %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+    {% elif theme == 3 %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='third.css')}}">
+    {% else %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='second.css')}}">
+    {% endif %}
+</head>
+
+<body>
+    <h1>Welcome {{user}}!</h1>
+    <nav>
+        <!--Add other pages-->
+        <a href="{{ url_for('index') }}">Home</a> <span class="nav-spacing">||</span>
+        <a href="{{ url_for('new_project') }}">Create Project</a> <span class="nav-spacing">||</span>
+        <a href="{{ url_for('change_style', theme_id=theme) }}" method="get">Change Theme</a> <span
+            class="nav-spacing">||</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="table-header">
+        <br>
+        <h2>Here are your available projects!</h2>
+
+    </div>
+
+
+    <div class="box">
+
+        <table class="insideBox">
+            <!--Add start of for loop here-->
+            <tr>
+                <td>
+                    <h3>Image</h3>
+                </td>
+                <td>
+                    <h3>Title</h3>
+                </td>
+                <td>
+                    <h3>Description</h3>
+                </td>
+                <td>
+                    <h3>Company</h3>
+                </td>
+            </tr>
+
+            <tr>
+                <!--Add in other <td> elements for whatever you need-->
+                {% for project in user_projects %}
+                {% if project.img_name == "flow.png" %}
+                <td class="tableRow"><img src="{{ project_image1 }}" width="50 px"></td>
+                {% elif project.img_name == "testing.png" %}
+                <td class="tableRow"><img src="{{ project_image2 }}" width="50 px"></td>
+                {% else %}
+                <td class="tableRow"><img src="{{ project_image3 }}" width="50 px"></td>
+                {% endif %}
+                <td class="tableRow"><a href="{{ url_for('get_project', project_id=project.id) }}">{{project.title}}</a>
+                </td>
+                <td class="tableRow2">{{project.detail}}</a></td>
+                <td class="tableRow">{{project.company_name}}</a></td>
+
+                <td>
+                    <form action="{{url_for('edit_project',project_id=project.id)}}" method="get">
+                        <input type="submit" value="Edit">
+                    </form>
+                    <form action="{{url_for('delete_project',project_id=project.id)}}" method="post">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            <!--Add end of for loop here-->
+        </table>
+        <div class="projectView">
+            <form action="{{ url_for('new_project') }}">
+                <input type="submit" value="Create New Project">
+            </form>
+            <form action="{{url_for('sort')}}">
+                <input type="submit" value="Sort Alphabetically">
+            </form>
         </div>
- 
+    </div>
+</body>
 
-        <div class="box">
-
-            <table class="insideBox">
-                <!--Add start of for loop here-->
-                <tr>
-                    <td><h3>Image</h3></td>
-                    <td><h3>Title</h3></td>
-                    <td><h3>Description</h3></td>
-                    <td><h3>Company</h3></td>
-                </tr>
-
-                <tr>
-                    <!--Add in other <td> elements for whatever you need-->
-                {% for project in user_projects %}  
-                    {% if project.img_name == "flow.png" %}
-                        <td class="tableRow"><img src="{{ project_image1 }}" width="50 px"></td>
-                    {% elif project.img_name == "testing.png" %}
-                        <td class="tableRow"><img src="{{ project_image2 }}" width="50 px"></td>
-                    {% else %}
-                        <td class="tableRow"><img src="{{ project_image3 }}" width="50 px"></td>
-                    {% endif %}  
-                    <td class="tableRow"><a href="{{ url_for('get_project', project_id=project.id) }}">{{project.title}}</a></td>
-                    <td class="tableRow2">{{project.detail}}</a></td>
-                    <td class="tableRow">{{project.company_name}}</a></td>
-                    <!--EDIT NOT WORKING YET-->
-                    <td>
-                        <form action="{{url_for('edit_project',project_id=project.id)}}" method = "get">
-                            <input type="submit" value="Edit">
-                        </form>
-                        <form action="{{url_for('delete_project',project_id=project.id)}}" method = "post">
-                            <input type="submit" value="Delete">
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-                <!--Add end of for loop here-->
-            </table>
-            <div class="projectView">
-                <form action="{{ url_for('new_project') }}">
-                    <input type="submit" value="Create New Project">
-                </form>
-                <form action="{{url_for('sort')}}">
-                    <input type="submit" value="Sort Alphabetically">
-                </form>
-            </div>
-        </div>
-    </body>
 </html>

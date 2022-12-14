@@ -9,11 +9,11 @@
     <!--styles-->
     {% if theme == 1 %}
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
-{% elif theme == 3 %}
-<link rel="stylesheet" href="{{ url_for('static', filename='third.css')}}">
-{% else %}
+    {% elif theme == 3 %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='third.css')}}">
+    {% else %}
     <link rel="stylesheet" href="{{ url_for('static', filename='second.css')}}">
-{% endif %}
+    {% endif %}
 </head>
 
 <body>
@@ -21,50 +21,89 @@
     <nav>
         <!--Add other pages-->
         <a href="{{ url_for('index') }}">Home</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('new_project') }}">Create Project</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('change_style', theme_id=theme) }}" method = "get">Change Theme</a> <span class="nav-spacing">||</span>
-            <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('new_project') }}">Create Project</a> <span class="nav-spacing">||</span>
+        <a href="{{ url_for('change_style', theme_id=theme) }}" method="get">Change Theme</a> <span
+            class="nav-spacing">||</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
     </nav>
     <div class="box">
-            {% if project %}
-                <h2>Update Project</h2>
-                <form action="{{url_for('edit_project',project_id=project.id)}}" method="POST">
+        {% if project %}
+        <h2>Update Project</h2>
+        <form action="{{url_for('edit_project',project_id=project.id)}}" method="POST">
             {% else %}
-                <h2>Create Project</h2>
-                <form action="{{url_for('new_project')}}" method="POST">
-            {% endif %}
-            <h3><p><label>Title </label></p></h3>
-            <p><input type="text" name="title" value="{% if project %}{{project.title}}{% endif %}" /></p>
-            <h3><p><label>Description </label></p></h3>
-            <p>
-                {% if project %}
+            <h2>Create Project</h2>
+            <form action="{{url_for('new_project')}}" method="POST">
+                {% endif %}
+                <h3>
+                    <p><label>Title </label></p>
+                </h3>
+                <p><input type="text" name="title" required="required"
+                        value="{% if project %}{{project.title}}{% endif %}" /></p>
+                <h3>
+                    <p><label>Description </label></p>
+                </h3>
+                <p>
+                    {% if project %}
                     <textarea name="detail" rows="6" cols="0">{{project.detail}}</textarea>
-                {% else %}
-                    <textarea name="detail" rows="6" cols="0">Add a description of your project here</textarea>
-                {% endif %}
-            </p>
-            <h3><p><label>Company Name</label></p></h3>
-            <p><input type="text" name="company_name" value="{% if project %}{{project.company_name}}{% endif %}" /></p>
+                    {% else %}
+                    <textarea name="detail" rows="6" cols="0"
+                        placeholder="Add a description of your project here"></textarea>
+                    {% endif %}
+                </p>
+                <h3>
+                    <p><label>Company Name</label></p>
+                </h3>
+                <p><input type="text" name="company_name" required="required"
+                        value="{% if project %}{{project.company_name}}{% endif %}" /></p>
 
-            <h3><p><label>Image </label></p></h3>
-            <input type="radio" name="image" value="Image 3" required="required">
-            <label>Work In Progress!</label><br>
-            <input type="radio" name="image" value="Image 1">
-            <label>Important!</label><br>
-            <input type="radio" name="image" value="Image 2" >
-            <label>Almost There!</label><br>
-
-            <p>
+                <h3>
+                    <p><label>Image </label></p>
+                </h3>
                 {% if project %}
-                    <input type="submit" value="Update Project" />
+                {% if project.img_name == "flow.png" %}
+                <input type="radio" name="image" value="Image 3" required="required">
+                <label>Work In Progress!</label><br>
+                <input type="radio" name="image" value="Image 1" checked="checked">
+                <label>Important!</label><br>
+                <input type="radio" name="image" value="Image 2">
+                <label>Almost There!</label><br>
+                {% elif project.img_name == "testing.png" %}
+                <input type="radio" name="image" value="Image 3" required="required">
+                <label>Work In Progress!</label><br>
+                <input type="radio" name="image" value="Image 1">
+                <label>Important!</label><br>
+                <input type="radio" name="image" value="Image 2" checked="checked">
+                <label>Almost There!</label><br>
                 {% else %}
-                    <input type="submit" value="Add Project" />
+                <input type="radio" name="image" value="Image 3" required="required" checked="checked">
+                <label>Work In Progress!</label><br>
+                <input type="radio" name="image" value="Image 1">
+                <label>Important!</label><br>
+                <input type="radio" name="image" value="Image 2">
+                <label>Almost There!</label><br>
                 {% endif %}
-            </p>
-        </form>
+
+                {% else %}
+                <input type="radio" name="image" value="Image 3" required="required" checked="checked">
+                <label>Work In Progress!</label><br>
+                <input type="radio" name="image" value="Image 1">
+                <label>Important!</label><br>
+                <input type="radio" name="image" value="Image 2">
+                <label>Almost There!</label><br>
+
+                {% endif %}
+
+                <p>
+                    {% if project %}
+                    <input type="submit" value="Update Project" />
+                    {% else %}
+                    <input type="submit" value="Add Project" />
+                    {% endif %}
+                </p>
+            </form>
     </div>
     <div class="projectView">
-        <form action="{{ url_for('index')}}" method = "get">
+        <form action="{{ url_for('index')}}" method="get">
             <input type="submit" value="Back Home">
         </form>
     </div>

@@ -13,7 +13,7 @@ h2 {
 }
 
 h3 {
-    color: #735d78
+    color: #553d5b
 }
 
 h4 {
@@ -22,7 +22,7 @@ h4 {
 }
 
 body {
-    background:#f7d1cd;
+    background:#dfc0bd; /*f7d1cd */
 }
 
 a, .nav-spacing {
@@ -52,7 +52,7 @@ nav {
 }
 
 .insideBox {
-    background-color: #B392AC;
+    background-color: #95758e;
     text-align: left;
     border: 5px solid;
     margin-bottom: 20px;
@@ -120,4 +120,9 @@ form div {
     display: inline-block;
     padding: 1rem 1rem;
     vertical-align: middle;
+  }
+  .buttonalign{
+    text-align: center;
+    vertical-align: middle;
+    scroll-snap-align: middle;
   }

@@ -1,15 +1,16 @@
 <!-- landing page for app -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Register</title>
-        <!--styles-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='forms.css')}}">
-    </head>
-    <h2>Please register below...</h2>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <!--styles-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='forms.css')}}">
+</head>
+<h2>Please register below...</h2>
 <div class="formwrapper">
     <h2 class="title">Register</h2>
     <form method="POST" action="/register">
@@ -54,6 +55,7 @@
 
 </div>
 <h2>If you are already a user, use the link below to go to the login page</h2>
-        <a href="{{ url_for('login') }}">Login</a>  
+<a href="{{ url_for('login') }}">Login</a>
 </body>
+
 </html>
