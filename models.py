@@ -7,12 +7,16 @@ class Project(db.Model):
     detail = db.Column('detail', db.String(1000))
     company_name = db.Column('company_name', db.String(100))
     img_name = db.Column('img', db.String(100))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    #comments = db.relationship("Comment",backref="note", cascade="all, delete-orphan",lazy=True)
 
-    def __init__(self, title, detail, company_name, img):
+
+    def __init__(self, title, detail, company_name, img, user_id):
         self.title = title
         self.detail = detail
         self.company_name = company_name
         self.img_name = img
+        self.user_id = user_id
 
 # Project Comment model - contains project comment information for associated project_id
 class Project_Comment(db.Model):
@@ -57,6 +61,7 @@ class User(db.Model):
     email = db.Column('email', db.String(50))
     password = db.Column('password', db.String(30), nullable=False)
     theme = db.Column('theme', db.Integer, nullable=False)
+    projects = db.relationship("Project", backref="user", lazy=True)
     
     def __init__(self, username, email, password, theme):
         self.username = username
@@ -100,8 +105,8 @@ def find_users_by_email(u_email):
     return db.session.query(User).filter_by(email = u_email).all()
 
 # create operations
-def create_project(title, detail, company_name, img):
-    project = Project(title, detail, company_name, img)
+def create_project(title, detail, company_name, img, user_id):
+    project = Project(title, detail, company_name, img, user_id)
     db.session.add(project)
     db.session.commit()
 
@@ -126,13 +131,14 @@ def create_user(username, email, password, theme):
     db.session.commit()
 
 # update operations
-def update_project(p_id, title, detail, company, img):
+def update_project(p_id, title, detail, company, img, user_id):
     # get project from db and update values
     project = find_project_by_id(p_id)
     project.title = title
     project.detail = detail
     project.company_name = company
     project.img_name = img
+    project.user_id = user_id
     # push changes
     db.session.add(project)
     db.session.commit()
@@ -179,12 +185,6 @@ def remove_task(t_id, project_id):
     task = find_task_by_id(project_id, t_id)
     db.session.delete(task)
     db.session.commit()
-
-#def remove_tcomment(c_id, project_id, task_id):
-    # get comment from db and delete
-   # comment = find_pcomment_by_id(task_id, c_id)
-   # db.session.delete(comment)
-   # db.session.commit()
 
 def remove_pcomment(project_id, c_id):
     # get comment from db and delete

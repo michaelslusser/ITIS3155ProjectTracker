@@ -32,7 +32,7 @@ with app.app_context():
 @app.route('/projects')
 def index():
     if session.get('user'):
-        projects = find_projects()
+        projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
         image1 = os.path.join(app.config['UPLOAD_FOLDER'], 'flow.png')
         image2 = os.path.join(app.config['UPLOAD_FOLDER'], 'testing.png')
         image3 = os.path.join(app.config['UPLOAD_FOLDER'], 'default.png')
@@ -91,13 +91,13 @@ def new_project():
             company = request.form['company_name']
             if request.form['image'] == "Image 1":
                 imagename = 'flow.png'
-                create_project(title, text, company, imagename)
+                create_project(title, text, company, imagename, session['user_id'])
             elif request.form['image'] == "Image 2":
                 imagename = 'testing.png'
-                create_project(title, text, company, imagename)
+                create_project(title, text, company, imagename, session['user_id'])
             else:
                 imagename = 'default.png'
-                create_project(title, text, company, imagename)
+                create_project(title, text, company, imagename, session['user_id'])
             return redirect(url_for('index'))
         else:
             return render_template('new_project.html', user=session['user'], theme=session['user_theme'])
@@ -113,13 +113,13 @@ def edit_project(project_id):
             company_name = request.form['company_name']
             if request.form['image'] == "Image 1":
                 imagename = 'flow.png'
-                update_project(project_id, title, detail, company_name, imagename)
+                update_project(project_id, title, detail, company_name, imagename, session['user_id'])
             elif request.form['image'] == "Image 2":
                 imagename = 'testing.png'
-                update_project(project_id, title, detail, company_name, imagename)
+                update_project(project_id, title, detail, company_name, imagename, session['user_id'])
             else:
                 imagename = 'default.png'
-                update_project(project_id, title, detail, company_name, imagename)
+                update_project(project_id, title, detail, company_name, imagename, session['user_id'])
             return redirect(url_for('index'))
         else:
             my_project = find_project_by_id(project_id)
