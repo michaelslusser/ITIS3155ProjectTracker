@@ -40,12 +40,15 @@ def index():
     return redirect(url_for('login'))
 
 # PROJECT SORT
-@app.route('/index/sort')
+@app.route('/sort')
 def sort():
     if session.get('user'):
         projects = find_projects()
+        image1 = os.path.join(app.config['UPLOAD_FOLDER'], 'flow.png')
+        image2 = os.path.join(app.config['UPLOAD_FOLDER'], 'testing.png')
+        image3 = os.path.join(app.config['UPLOAD_FOLDER'], 'default.png')
         projects.sort(key = lambda project:project.title.lower())
-        return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'])
+        return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'], project_image1=image1, project_image2=image2,project_image3=image3)
     return redirect(url_for('login'))
 
 # VIEW PROJECT

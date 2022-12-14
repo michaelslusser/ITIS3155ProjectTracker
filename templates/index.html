@@ -43,7 +43,7 @@
 
                 <tr>
                     <!--Add in other <td> elements for whatever you need-->
-                        {% for project in user_projects %}  
+                {% for project in user_projects %}  
                     {% if project.img_name == "flow.png" %}
                         <td class="tableRow"><img src="{{ project_image1 }}" width="50 px"></td>
                     {% elif project.img_name == "testing.png" %}
