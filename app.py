@@ -33,9 +33,10 @@ with app.app_context():
 def index():
     if session.get('user'):
         projects = find_projects()
-        image1 = os.path.join(app.config['UPLOAD_FOLDER'], 'flow.jpg')
-        image2 = os.path.join(app.config['UPLOAD_FOLDER'], 'testing.jpg')
-        return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'], project_image1=image1, project_image2=image2)
+        image1 = os.path.join(app.config['UPLOAD_FOLDER'], 'flow.png')
+        image2 = os.path.join(app.config['UPLOAD_FOLDER'], 'testing.png')
+        image3 = os.path.join(app.config['UPLOAD_FOLDER'], 'default.png')
+        return render_template("index.html", user=session['user'], user_projects=projects, theme=session['user_theme'], project_image1=image1, project_image2=image2,project_image3=image3)
     return redirect(url_for('login'))
 
 # PROJECT SORT
@@ -86,10 +87,13 @@ def new_project():
             text = request.form['detail']
             company = request.form['company_name']
             if request.form['image'] == "Image 1":
-                imagename = 'flow.jpg'
+                imagename = 'flow.png'
+                create_project(title, text, company, imagename)
+            elif request.form['image'] == "Image 2":
+                imagename = 'testing.png'
                 create_project(title, text, company, imagename)
             else:
-                imagename = 'testing.jpg'
+                imagename = 'default.png'
                 create_project(title, text, company, imagename)
             return redirect(url_for('index'))
         else:
@@ -105,10 +109,13 @@ def edit_project(project_id):
             detail = request.form['detail']
             company_name = request.form['company_name']
             if request.form['image'] == "Image 1":
-                imagename = 'flow.jpg'
+                imagename = 'flow.png'
+                update_project(project_id, title, detail, company_name, imagename)
+            elif request.form['image'] == "Image 2":
+                imagename = 'testing.png'
                 update_project(project_id, title, detail, company_name, imagename)
             else:
-                imagename = 'testing.jpg'
+                imagename = 'default.png'
                 update_project(project_id, title, detail, company_name, imagename)
             return redirect(url_for('index'))
         else:
@@ -281,14 +288,6 @@ def change_style(theme_id):
             return render_template("change_theme.html", user=session['user'], theme_id = session['user_theme'])
     else:
         return redirect(url_for('login'))
-# in progress not working (delete comment)
-@app.route('/view_project/<project_id>/deletepcomment', methods=['POST'])
-def delete_pcomment(project_id, t_id):
-    if session.get('user'):
-        #comment_text = request.form['comment']
-        delete_pcomment(int(project_id), int(t_id), session['user'])
-        return redirect(url_for('get_project', project_id=project_id, t_id = t_id))
-    else:
-        return redirect(url_for('login'))
+
 # start server at http://127.0.0.1:5000
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)

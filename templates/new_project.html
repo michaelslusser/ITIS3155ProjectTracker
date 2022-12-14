@@ -45,10 +45,15 @@
             </p>
             <h3><p><label>Company Name</label></p></h3>
             <p><input type="text" name="company_name" value="{% if project %}{{project.company_name}}{% endif %}" /></p>
+
+            <h3><p><label>Image </label></p></h3>
+            <input type="radio" name="image" value="Image 3" required="required">
+            <label>Work In Progress!</label><br>
             <input type="radio" name="image" value="Image 1">
-            <label>Image 1</label><br>
+            <label>Important!</label><br>
             <input type="radio" name="image" value="Image 2" >
-            <label>Image 2</label><br>
+            <label>Almost There!</label><br>
+
             <p>
                 {% if project %}
                     <input type="submit" value="Update Project" />

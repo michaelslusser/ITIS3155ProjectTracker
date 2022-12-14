@@ -28,24 +28,29 @@
             <h2>Here are your available projects!</h2>
             
         </div>
+ 
 
         <div class="box">
-            
+
             <table class="insideBox">
                 <!--Add start of for loop here-->
                 <tr>
+                    <td><h3>Image</h3></td>
                     <td><h3>Title</h3></td>
                     <td><h3>Description</h3></td>
                     <td><h3>Company</h3></td>
                 </tr>
-                {% for project in user_projects %} 
+
                 <tr>
                     <!--Add in other <td> elements for whatever you need-->
-                    {% if project.img_name == "flow.jpg" %}
-                        <td><img src="{{ project_image1 }}" width="50 px"></td>
+                        {% for project in user_projects %}  
+                    {% if project.img_name == "flow.png" %}
+                        <td class="tableRow"><img src="{{ project_image1 }}" width="50 px"></td>
+                    {% elif project.img_name == "testing.png" %}
+                        <td class="tableRow"><img src="{{ project_image2 }}" width="50 px"></td>
                     {% else %}
-                        <td><img src="{{ project_image2 }}" width="50 px"></td>
-                    {% endif %}
+                        <td class="tableRow"><img src="{{ project_image3 }}" width="50 px"></td>
+                    {% endif %}  
                     <td class="tableRow"><a href="{{ url_for('get_project', project_id=project.id) }}">{{project.title}}</a></td>
                     <td class="tableRow2">{{project.detail}}</a></td>
                     <td class="tableRow">{{project.company_name}}</a></td>

@@ -58,6 +58,17 @@ nav {
     margin-bottom: 20px;
     width: 100%;
 }
+.imgBox {
+    background-color: #edf5e1;
+    text-align: left;
+    border: 2px solid;
+    margin-bottom: 20px;
+}
+.imgRow {
+    border: 5px solid #1b6758;
+    width: 1em;
+    text-align: left;
+}
 
 .insideBox h3 {
     text-align: center;
