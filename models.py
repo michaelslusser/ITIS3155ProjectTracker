@@ -71,8 +71,8 @@ class User(db.Model):
 
 # functions to interact with models 
 # read operations
-def find_projects():
-    return db.session.query(Project).all()
+def find_projects(session):
+    return db.session.query(Project).filter_by(user_id=session).all()
 
 def find_project_by_id(p_id):
     return db.session.query(Project).filter_by(id = p_id).one()

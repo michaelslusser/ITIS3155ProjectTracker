@@ -32,7 +32,7 @@ with app.app_context():
 @app.route('/projects')
 def index():
     if session.get('user'):
-        projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
+        projects = find_projects(session['user_id'])
         image1 = os.path.join(app.config['UPLOAD_FOLDER'], 'flow.png')
         image2 = os.path.join(app.config['UPLOAD_FOLDER'], 'testing.png')
         image3 = os.path.join(app.config['UPLOAD_FOLDER'], 'default.png')
@@ -43,7 +43,7 @@ def index():
 @app.route('/sort')
 def sort():
     if session.get('user'):
-        projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
+        projects = find_projects(session['user_id'])
         image1 = os.path.join(app.config['UPLOAD_FOLDER'], 'flow.png')
         image2 = os.path.join(app.config['UPLOAD_FOLDER'], 'testing.png')
         image3 = os.path.join(app.config['UPLOAD_FOLDER'], 'default.png')
