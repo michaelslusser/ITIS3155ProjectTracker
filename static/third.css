@@ -39,11 +39,15 @@ nav {
 }
 
 .box {
-    color:#c1c7f2;
+    color: #c1c7f2;
     width: 40%;
     text-align: center;
     text-decoration:none;
     margin: 0px auto;
+}
+
+form label {
+    color: #735d78
 }
 
 .table-header {
